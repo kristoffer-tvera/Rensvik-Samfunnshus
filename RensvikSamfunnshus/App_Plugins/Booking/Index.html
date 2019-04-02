@@ -1,0 +1,50 @@
+﻿<div ng-controller="BookingController">
+    <h1>{{ title }}</h1>
+
+    <form name="bookingtable">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Motatt</th>
+                    <th>Fra</th>
+                    <th>Til</th>
+                    <th>Område</th>
+                    <th>Kontakt</th>
+                    <th>Kommentar</th>
+                    <th>Ønsker nedvasking</th>
+                    <th>Godtatt</th>
+                    <th>Betalt</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="booking in bookings">
+                    <td>{{ booking.Requested }}</td>
+                    <td>{{ booking.From }}</td>
+                    <td>{{ booking.To }}</td>
+                    <td>{{ booking.Area }}</td>
+                    <td>{{ booking.Telephone }} {{ booking.Email }}</td>
+                    <td>{{ booking.Comment }}</td>
+                    <td> <input type="checkbox" ng-model="booking.Wash" ng-disabled="true" /></td>
+                    <td> <input type="checkbox" ng-model="booking.Approved" /></td>
+                    <td> <input type="text" ng-model="booking.Payment" class="booking--date" /></td>
+                    <!--<td>
+                    <umb-date-time-picker options="dateTimePickerConfig" on-change="datePickerChange(event)" ng-model="booking.Payment">
+                        {{ booking.Payment }}
+                    </umb-date-time-picker>
+                </td>-->
+                </tr>
+            </tbody>
+        </table>
+    </form>
+
+    <div>
+        <p ng-if="bookingtable.$dirty"> Du har gjort endringer, husk å lagre </p>
+
+        <!--<button type="button" ng-click="bookingtable.$setPristine()"> reset </button>-->
+    </div>
+
+    <div>
+        <button ng-click="save();bookingtable.$setPristine()"> Lagre endringer </button>
+    </div>
+
+</div>
