@@ -282,6 +282,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Plugins\Booking\controller.js" />
+    <Content Include="App_Plugins\Booking\index.html" />
+    <Content Include="App_Plugins\Booking\lib\datepicker.css" />
+    <Content Include="App_Plugins\Booking\lang\en-us.xml" />
+    <Content Include="App_Plugins\Booking\lib\datepicker.js" />
+    <Content Include="App_Plugins\Booking\style.css" />
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.controller.js" />
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.htm" />
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.resource.js" />
@@ -1735,6 +1741,7 @@
     <Content Include="config\BackOfficeTours\getting-started.json" />
     <Content Include="config\applications.config" />
     <Content Include="config\404handlers.config" />
+    <Content Include="App_Plugins\Booking\package.manifest" />
     <None Include="packages.config" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Partials\Grid\Editors\Textstring.cshtml" />
