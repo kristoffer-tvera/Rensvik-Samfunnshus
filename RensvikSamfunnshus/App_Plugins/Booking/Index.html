@@ -18,20 +18,15 @@
             </thead>
             <tbody>
                 <tr ng-repeat="booking in bookings">
-                    <td>{{ booking.Requested }}</td>
-                    <td>{{ booking.From }}</td>
-                    <td>{{ booking.To }}</td>
+                    <td>{{ booking.Requested | date:'dd-MM-yyyy'}}</td>
+                    <td>{{ booking.From | date:'dd-MM-yyyy'}}</td>
+                    <td>{{ booking.To | date:'dd-MM-yyyy'}}</td>
                     <td>{{ booking.Area }}</td>
                     <td>{{ booking.Telephone }} {{ booking.Email }}</td>
                     <td>{{ booking.Comment }}</td>
                     <td> <input type="checkbox" ng-model="booking.Wash" ng-disabled="true" /></td>
                     <td> <input type="checkbox" ng-model="booking.Approved" /></td>
                     <td> <input type="text" ng-model="booking.Payment" class="booking--date" /></td>
-                    <!--<td>
-                    <umb-date-time-picker options="dateTimePickerConfig" on-change="datePickerChange(event)" ng-model="booking.Payment">
-                        {{ booking.Payment }}
-                    </umb-date-time-picker>
-                </td>-->
                 </tr>
             </tbody>
         </table>

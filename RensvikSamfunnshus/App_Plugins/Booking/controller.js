@@ -3,7 +3,10 @@
 
     angular
         .module('umbraco')
-        .controller('BookingController', function ($scope,assetsService) {
+        .controller('BookingController', function ($scope, $http, assetsService) {
+            $scope.title = 'Booking';
+            $scope.bookings = [];
+
             assetsService
                 .load([
                     "~/App_Plugins/Booking/lib/datepicker.js"
@@ -15,56 +18,23 @@
                 "~/App_Plugins/Booking/lib/datepicker.css"
             );
 
-            $scope.title = 'Booking';
-
-            $scope.bookings = [];
-
-            $scope.bookings.push({
-                Requested: '01.04.2019',
-                From: '03.04.2019',
-                To: '05.04.2019',
-                Area: 'Stor sal',
-                Telephone: '123456789',
-                Email: 'test@example.com',
-                Comment: 'Insert comment here',
-                Wash: true,
-                Approved: true,
-                Payment: '01-04-2019'
-            });
-
-            $scope.bookings.push({
-                Requested: '02.04.2019',
-                From: '13.04.2019',
-                To: '15.04.2019',
-                Area: 'Liten sal',
-                Telephone: '444 55 666',
-                Email: 'test@example.com',
-                Comment: 'Insert comment here',
-                Wash: true,
-                Approved: false,
-                Payment: '02-04-2019'
-            });
-
-            $scope.bookings.push({
-                Requested: '02.04.2019',
-                From: '13.04.2019',
-                To: '15.04.2019',
-                Area: 'Liten sal',
-                Telephone: '444 55 666',
-                Email: 'test@example.com',
-                Comment: 'Insert comment here',
-                Wash: true,
-                Approved: false,
-                Payment: ''
-            });
+            var url = '/umbraco/backoffice/api/Booking/';
 
             $scope.save = function () {
                 console.log($scope.bookings);
+                $http.post(url + 'save', $scope.bookings).then(function (response) {
+                    alert('saved');
+                });
             };
 
-            
             function initialize() {
-                flatpickr(".booking--date", { dateFormat: "d-m-Y"});
+                $http.get(url + 'load').then(function (response) {
+                    console.log(response);
+                    $scope.bookings = response.data;
+                    setTimeout(function () {
+                        flatpickr(".booking--date", { dateFormat: "d-m-Y" });
+                    }, 0);
+                });
             }
         });
 

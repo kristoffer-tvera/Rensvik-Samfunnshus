@@ -1710,9 +1710,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Hangfire\HangfireAuthorization.cs" />
     <Compile Include="Hangfire\HangfireConfig.cs" />
     <Compile Include="Hangfire\HangfireTasks.cs" />
+    <Compile Include="Models\Booking.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\LogHelper.cs" />
     <Compile Include="Utility\RandomHelper.cs" />
@@ -1926,9 +1928,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Events\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
