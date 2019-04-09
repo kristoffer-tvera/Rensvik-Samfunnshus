@@ -1720,8 +1720,10 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\Events.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Controllers\BookingController.cs" />
+    <Compile Include="Controllers\BookingSurfaceController.cs" />
     <Compile Include="Hangfire\HangfireAuthorization.cs" />
     <Compile Include="Hangfire\HangfireConfig.cs" />
     <Compile Include="Hangfire\HangfireTasks.cs" />

@@ -1,6 +1,4 @@
 ﻿using RensvikSamfunnshus.Models;
-
-using System;
 using System.Collections.Generic;
 using System.Web.Http;
 using Umbraco.Core.Persistence;
