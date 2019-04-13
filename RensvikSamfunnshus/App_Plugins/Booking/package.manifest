@@ -1,5 +1,5 @@
 ﻿{
   "$schema": "http://json.schemastore.org/package.manifest",
   "css": [ "~/App_Plugins/Booking/style.css"],
-  "javascript": [ "~/App_Plugins/Booking/controller.js" ]
+  "javascript": [ "~/App_Plugins/Booking/controller.js", "~/App_Plugins/Booking/old.controller.js" ]
 }

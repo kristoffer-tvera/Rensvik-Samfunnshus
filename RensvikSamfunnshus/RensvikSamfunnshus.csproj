@@ -289,6 +289,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Plugins\Booking\old.controller.js" />
+    <Content Include="App_Plugins\Booking\old.html" />
     <Content Include="App_Plugins\Booking\controller.js" />
     <Content Include="App_Plugins\Booking\index.html" />
     <Content Include="App_Plugins\Booking\lib\datepicker.css" />

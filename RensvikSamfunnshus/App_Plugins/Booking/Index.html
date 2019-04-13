@@ -1,7 +1,42 @@
 ﻿<div ng-controller="BookingController">
     <h1>{{ title }}</h1>
 
-    <form name="bookingtable">
+    <form name="newBooking">
+        <h3>Legg til en ny booking</h3>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Fra</th>
+                    <th>Til</th>
+                    <th>Område</th>
+                    <th>Telefon</th>
+                    <th>Epost</th>
+                    <th>Kommentar</th>
+                    <th>Ønsker nedvasking</th>
+                    <th>Godtatt</th>
+                    <th>Betalt</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" ng-model="new.From" class="booking--date" required="required" /></td>
+                    <td><input type="text" ng-model="new.To" class="booking--date" required="required" /></td>
+                    <td><input type="text" ng-model="new.Area" required="required" /></td>
+                    <td><input type="tel" ng-model="new.Telephone" required="required" /></td>
+                    <td><input type="email" ng-model="new.Email" /></td>
+                    <td><textarea ng-model="new.Comment"></textarea></td>
+                    <td> <input type="checkbox" ng-model="new.Wash" /></td>
+                    <td> <input type="checkbox" ng-model="new.Approved" /></td>
+                    <td> <input type="text" ng-model="new.Payment" class="booking--date" /></td>
+                    <td> <button ng-click="addNew();newBooking.$setPristine()" ng-disabled="newBooking.$invalid">+</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+
+    <div>
+        <h3>Alle forespørsler</h3>
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -9,11 +44,13 @@
                     <th>Fra</th>
                     <th>Til</th>
                     <th>Område</th>
-                    <th>Kontakt</th>
+                    <th>Telefon</th>
+                    <th>Epost</th>
                     <th>Kommentar</th>
                     <th>Ønsker nedvasking</th>
                     <th>Godtatt</th>
                     <th>Betalt</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -22,15 +59,17 @@
                     <td>{{ booking.From | date:'dd-MM-yyyy'}}</td>
                     <td>{{ booking.To | date:'dd-MM-yyyy'}}</td>
                     <td>{{ booking.Area }}</td>
-                    <td>{{ booking.Telephone }} {{ booking.Email }}</td>
+                    <td>{{ booking.Telephone }}</td>
+                    <td>{{ booking.Email }}</td>
                     <td>{{ booking.Comment }}</td>
                     <td> <input type="checkbox" ng-model="booking.Wash" ng-disabled="true" /></td>
                     <td> <input type="checkbox" ng-model="booking.Approved" /></td>
                     <td> <input type="text" ng-model="booking.Payment" class="booking--date" /></td>
+                    <td> <button ng-click="save(booking.Id, booking.Requested, booking.From, booking.To, booking.Area, booking.Telephone, booking.Email, booking.Comment, booking.Wash, booking.Approved, booking.Payment)">Lagre</button></td>
                 </tr>
             </tbody>
         </table>
-    </form>
+    </div>
 
     <div>
         <p ng-if="bookingtable.$dirty"> Du har gjort endringer, husk å lagre </p>
@@ -39,7 +78,7 @@
     </div>
 
     <div>
-        <button ng-click="save();bookingtable.$setPristine()"> Lagre endringer </button>
+        <!--<button ng-click="save();bookingtable.$setPristine()"> Lagre endringer </button>-->
     </div>
 
 </div>
