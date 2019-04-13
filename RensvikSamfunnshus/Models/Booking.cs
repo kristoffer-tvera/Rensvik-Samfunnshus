@@ -5,6 +5,8 @@ using Umbraco.Core.Persistence.DatabaseAnnotations;
 namespace RensvikSamfunnshus.Models
 {
     [TableName("Booking")]
+    [PrimaryKey("Id", autoIncrement = true)]
+    [ExplicitColumns]
     public class Booking
     {
         [Column("Id")]
@@ -30,6 +32,7 @@ namespace RensvikSamfunnshus.Models
         public string Email { get; set; }
 
         [Column("Comment")]
+        [NullSetting(NullSetting = NullSettings.Null)]
         public string Comment { get; set; }
 
         [Column("Wash")]
@@ -39,7 +42,7 @@ namespace RensvikSamfunnshus.Models
         public bool Approved { get; set; }
 
         [Column("Payment")]
+        [NullSetting(NullSetting = NullSettings.Null)]
         public DateTime? Payment { get; set; }
-
     }
 }
