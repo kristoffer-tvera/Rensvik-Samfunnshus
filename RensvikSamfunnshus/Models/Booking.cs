@@ -23,17 +23,18 @@ namespace RensvikSamfunnshus.Models
         public DateTime To { get; set; }
 
         [Column("Area")]
-        public string Area { get; set; }
+        public string Area { get; set; } = "";
 
         [Column("Telephone")]
-        public string Telephone { get; set; }
+        public string Telephone { get; set; } = "";
 
         [Column("Email")]
-        public string Email { get; set; }
+        [NullSetting(NullSetting = NullSettings.Null)]
+        public string Email { get; set; } = "";
 
         [Column("Comment")]
         [NullSetting(NullSetting = NullSettings.Null)]
-        public string Comment { get; set; }
+        public string Comment { get; set; } = "";
 
         [Column("Wash")]
         public bool Wash { get; set; }

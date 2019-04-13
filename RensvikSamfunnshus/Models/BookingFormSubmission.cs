@@ -23,10 +23,10 @@ namespace RensvikSamfunnshus.Models
         public string Telephone { get; set; }
 
         [DisplayName("Email")]
-        public string Email { get; set; }
+        public string Email { get; set; } = "";
 
         [DisplayName("Comment")]
-        public string Comment { get; set; }
+        public string Comment { get; set; } = "";
 
         [DisplayName("Wash")]
         public bool Wash { get; set; }
