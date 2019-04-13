@@ -1,0 +1,37 @@
+﻿@model RensvikSamfunnshus.Models.BookingFormSubmission
+
+@using (Html.BeginUmbracoForm("Submit", "BookingSurface"))
+{
+    @Html.AntiForgeryToken()
+    <label>
+    Fra
+    @Html.TextBoxFor(x => x.From, new { type = "date" })
+    </label>
+    <label>
+        Til
+    @Html.TextBoxFor(x => x.To, new { type = "date" })
+    </label>
+    <label>
+        Område
+    @Html.TextBoxFor(field => field.Area)
+    </label>
+    <label>
+        Telefon
+    @Html.TextBoxFor(field => field.Telephone)
+    </label>
+    <label>
+        Epost
+    @Html.TextBoxFor(field => field.Email)
+    </label>
+    <label>
+        Kommentar
+    @Html.TextAreaFor(field => field.Comment)
+    </label>
+
+    <label>
+        Ønsker vasking
+    @Html.CheckBoxFor(field => field.Wash)
+
+    </label>
+    <input type="submit" value="Send" />
+}

@@ -1728,6 +1728,7 @@
     <Compile Include="Hangfire\HangfireConfig.cs" />
     <Compile Include="Hangfire\HangfireTasks.cs" />
     <Compile Include="Models\Booking.cs" />
+    <Compile Include="Models\BookingFormSubmission.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\LogHelper.cs" />
     <Compile Include="Utility\RandomHelper.cs" />
@@ -1933,6 +1934,7 @@
     <Content Include="Umbraco\Xslt\Web.config" />
     <Content Include="Views\Master.cshtml" />
     <Content Include="Views\Root.cshtml" />
+    <Content Include="Views\Partials\_BookingForm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
