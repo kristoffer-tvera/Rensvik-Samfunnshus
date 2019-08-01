@@ -1,0 +1,96 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>title</title>
+    <meta name="author" content="name">
+    <meta name="description" content="description here">
+    <link rel="stylesheet" href="~/Content/site.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    @RenderSection("style", false)
+</head>
+<body>
+    <section class="bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light container">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <a class="navbar-brand" href="#">Om oss</a>
+            <a class="navbar-brand" href="#">Kontakt</a>
+            <a class="navbar-brand" href="#">Bilder</a>
+        </nav>
+    </section>
+
+    <section class="container">
+        <img src="https://source.unsplash.com/1600x900/?nature,water" class="mw-100" />
+    </section>
+
+    <section class="container">
+
+        @using (Html.BeginUmbracoForm("Submit", "BookingSurface"))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputName">Navn</label>
+                    <input type="text" class="form-control" id="inputName" placeholder="Navn">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputTelephone">Telefon</label>
+                    <input type="text" class="form-control" id="inputTelephone" placeholder="Telefon" name="Telephone">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Ønsket område</label>
+                <select class="form-control" id="exampleFormControlSelect1" name="Area">
+                    <option selected disabled>Velg en</option>
+                    <option>Lille sal</option>
+                    <option>Store sal</option>
+                    <option>Begge</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Example textarea</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Kommentar/ønsker" name="Comment"></textarea>
+            </div>
+            <div class="form-group">
+                <div class="form-check">
+                    <input type="hidden" name="Wash" value="False">
+                    <input class="form-check-input" type="checkbox" id="gridCheck" name="Wash" value="True">
+                    <label class="form-check-label" for="gridCheck">
+                        Ønsker vasking
+                    </label>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="fraDato">Fra</label>
+                    <input type="date" class="form-control" id="fraDato" placeholder="Fra dato" name="From">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="tilDato">Til</label>
+                    <input type="date" class="form-control" id="tilDato" placeholder="Til dato" name="To">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Send</button>
+        }
+    </section>
+
+    @RenderBody()
+
+    <footer class="footer mt-auto py-3">
+        <div class="container text-center">
+            <span class="text-muted">Copyright Rensvik Samfunnshus.</span>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    @RenderSection("script", false)
+</body>
+</html>
