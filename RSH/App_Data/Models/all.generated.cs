@@ -8,8 +8,8 @@ using  Umbraco.Web;
 using  Umbraco.ModelsBuilder;
 using  Umbraco.ModelsBuilder.Umbraco;
 [assembly: PureLiveAssembly]
-[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "c9e11732fb2acb73")]
-[assembly:System.Reflection.AssemblyVersion("0.0.0.1")]
+[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "515c9295f0aa25c6")]
+[assembly:System.Reflection.AssemblyVersion("0.0.0.4")]
 
 
 // FILE: models.generated.cs
@@ -42,7 +42,7 @@ namespace Umbraco.Web.PublishedContentModels
 {
 	/// <summary>Root</summary>
 	[PublishedContentModel("root")]
-	public partial class Root : PublishedContentModel
+	public partial class Root : PublishedContentModel, ICompositionContent
 	{
 #pragma warning disable 0109 // new is redundant
 		public new const string ModelTypeAlias = "root";
@@ -66,18 +66,36 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
+		/// Banner
+		///</summary>
+		[ImplementPropertyType("banner")]
+		public IEnumerable<IPublishedContent> Banner
+		{
+			get { return Umbraco.Web.PublishedContentModels.CompositionContent.GetBanner(this); }
+		}
+
+		///<summary>
+		/// Description
+		///</summary>
+		[ImplementPropertyType("description")]
+		public string Description
+		{
+			get { return Umbraco.Web.PublishedContentModels.CompositionContent.GetDescription(this); }
+		}
+
+		///<summary>
 		/// Grid
 		///</summary>
 		[ImplementPropertyType("grid")]
 		public Newtonsoft.Json.Linq.JToken Grid
 		{
-			get { return this.GetPropertyValue<Newtonsoft.Json.Linq.JToken>("grid"); }
+			get { return Umbraco.Web.PublishedContentModels.CompositionContent.GetGrid(this); }
 		}
 	}
 
 	/// <summary>Page</summary>
 	[PublishedContentModel("page")]
-	public partial class Page : PublishedContentModel
+	public partial class Page : PublishedContentModel, ICompositionContent
 	{
 #pragma warning disable 0109 // new is redundant
 		public new const string ModelTypeAlias = "page";
@@ -101,12 +119,194 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
+		/// Banner
+		///</summary>
+		[ImplementPropertyType("banner")]
+		public IEnumerable<IPublishedContent> Banner
+		{
+			get { return Umbraco.Web.PublishedContentModels.CompositionContent.GetBanner(this); }
+		}
+
+		///<summary>
+		/// Description
+		///</summary>
+		[ImplementPropertyType("description")]
+		public string Description
+		{
+			get { return Umbraco.Web.PublishedContentModels.CompositionContent.GetDescription(this); }
+		}
+
+		///<summary>
 		/// Grid
 		///</summary>
 		[ImplementPropertyType("grid")]
 		public Newtonsoft.Json.Linq.JToken Grid
 		{
-			get { return this.GetPropertyValue<Newtonsoft.Json.Linq.JToken>("grid"); }
+			get { return Umbraco.Web.PublishedContentModels.CompositionContent.GetGrid(this); }
+		}
+	}
+
+	// Mixin content Type 1058 with alias "compositionContent"
+	/// <summary>Composition - Content</summary>
+	public partial interface ICompositionContent : IPublishedContent
+	{
+		/// <summary>Banner</summary>
+		IEnumerable<IPublishedContent> Banner { get; }
+
+		/// <summary>Description</summary>
+		string Description { get; }
+
+		/// <summary>Grid</summary>
+		Newtonsoft.Json.Linq.JToken Grid { get; }
+	}
+
+	/// <summary>Composition - Content</summary>
+	[PublishedContentModel("compositionContent")]
+	public partial class CompositionContent : PublishedContentModel, ICompositionContent
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "compositionContent";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public CompositionContent(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<CompositionContent, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+
+		///<summary>
+		/// Banner
+		///</summary>
+		[ImplementPropertyType("banner")]
+		public IEnumerable<IPublishedContent> Banner
+		{
+			get { return GetBanner(this); }
+		}
+
+		/// <summary>Static getter for Banner</summary>
+		public static IEnumerable<IPublishedContent> GetBanner(ICompositionContent that) { return that.GetPropertyValue<IEnumerable<IPublishedContent>>("banner"); }
+
+		///<summary>
+		/// Description
+		///</summary>
+		[ImplementPropertyType("description")]
+		public string Description
+		{
+			get { return GetDescription(this); }
+		}
+
+		/// <summary>Static getter for Description</summary>
+		public static string GetDescription(ICompositionContent that) { return that.GetPropertyValue<string>("description"); }
+
+		///<summary>
+		/// Grid
+		///</summary>
+		[ImplementPropertyType("grid")]
+		public Newtonsoft.Json.Linq.JToken Grid
+		{
+			get { return GetGrid(this); }
+		}
+
+		/// <summary>Static getter for Grid</summary>
+		public static Newtonsoft.Json.Linq.JToken GetGrid(ICompositionContent that) { return that.GetPropertyValue<Newtonsoft.Json.Linq.JToken>("grid"); }
+	}
+
+	/// <summary>Banner - Image</summary>
+	[PublishedContentModel("bannerImage")]
+	public partial class BannerImage : PublishedContentModel
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "bannerImage";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public BannerImage(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<BannerImage, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+
+		///<summary>
+		/// Image
+		///</summary>
+		[ImplementPropertyType("image")]
+		public IPublishedContent Image
+		{
+			get { return this.GetPropertyValue<IPublishedContent>("image"); }
+		}
+
+		///<summary>
+		/// Textstring
+		///</summary>
+		[ImplementPropertyType("textstring")]
+		public string Textstring
+		{
+			get { return this.GetPropertyValue<string>("textstring"); }
+		}
+	}
+
+	/// <summary>Banner - Small</summary>
+	[PublishedContentModel("bannerSmall")]
+	public partial class BannerSmall : PublishedContentModel
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "bannerSmall";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public BannerSmall(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<BannerSmall, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+
+		///<summary>
+		/// Image
+		///</summary>
+		[ImplementPropertyType("image")]
+		public IPublishedContent Image
+		{
+			get { return this.GetPropertyValue<IPublishedContent>("image"); }
+		}
+
+		///<summary>
+		/// Textstring
+		///</summary>
+		[ImplementPropertyType("textstring")]
+		public string Textstring
+		{
+			get { return this.GetPropertyValue<string>("textstring"); }
 		}
 	}
 

@@ -356,6 +356,8 @@
     <Content Include="Views\Root.cshtml" />
     <Content Include="Views\Partials\Grid\Bootstrap4.cshtml" />
     <Content Include="scss\site.scss" />
+    <Content Include="Views\Page.cshtml" />
+    <Content Include="Views\Partials\_Banner_bannerImage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
