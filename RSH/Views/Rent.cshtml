@@ -1,0 +1,106 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.Rent>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = "Master.cshtml";
+    var modalTitle = TempData["ModalTitle"] as string;
+    var modalBody = TempData["ModalBody"] as string;
+}
+
+@section style {
+    <link href="~/Content/flatpickr/datepicker.css" rel="stylesheet" />
+}
+
+<section class="container my-3 py-3" id="bookingForm">
+
+    @using (Html.BeginUmbracoForm("Submit", "BookingSurface"))
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="nodeId" value="@Model.Content.Id" />
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputName">Navn</label>
+                <input type="text" class="form-control" id="inputName" placeholder="Navn" name="Name">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputTelephone">Telefon</label>
+                <input type="text" class="form-control" id="inputTelephone" placeholder="Telefon" name="Telephone">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Ønsket område</label>
+            <select class="form-control" id="exampleFormControlSelect1" name="Area">
+                <option selected disabled>Velg en</option>
+                <option>Lille sal</option>
+                <option>Store sal</option>
+                <option>Begge</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Example textarea</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Kommentar/ønsker" name="Comment"></textarea>
+        </div>
+        <div class="form-group">
+            <div class="form-check">
+                <input type="hidden" name="Wash" value="False">
+                <input class="form-check-input" type="checkbox" id="gridCheck" name="Wash" value="True">
+                <label class="form-check-label" for="gridCheck">
+                    Ønsker vasking
+                </label>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="fraDato">Dato</label>
+                <input type="date" class="form-control flatpicker" id="fraDato" placeholder="Fra dato" name="From">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="tilDato">Til</label>
+                <input type="date" class="form-control flatpicker" id="tilDato" placeholder="Til dato" name="To">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Send</button>
+    }
+</section>
+
+@Html.GetGridHtml(Model.Content, "grid", "Bootstrap4")
+
+<div class="modal" tabindex="-1" role="dialog" id="bookingmodal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@modalTitle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>@modalBody</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Lukk</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script {
+    <script src="~/Content/flatpickr/datepicker.js"></script>
+    <script type="text/javascript">
+        function autorun() {
+            flatpickr(".flatpicker", {
+                dateFormat: 'Z',
+                altInput: true,
+                altFormat: 'd-m-Y',
+                minDate: "today",
+            });
+
+            @if(!string.IsNullOrWhiteSpace(modalTitle) && !string.IsNullOrWhiteSpace(modalBody))
+            {
+                <text>$('#bookingmodal').modal('show');</text>
+            }
+        }
+        if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false);
+        else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun);
+        else window.onload = autorun;
+    </script>
+}

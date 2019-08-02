@@ -365,6 +365,7 @@
     <Content Include="Views\Partials\Banner\_bannerImage.cshtml" />
     <Content Include="Views\Partials\Banner\_bannerSmall.cshtml" />
     <Content Include="Views\Gallery.cshtml" />
+    <Content Include="Views\Rent.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

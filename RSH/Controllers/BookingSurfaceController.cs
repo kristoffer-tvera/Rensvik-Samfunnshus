@@ -1,4 +1,5 @@
 ﻿using RSH.Models;
+using RSH.Utility;
 using System;
 using System.Web.Mvc;
 using Umbraco.Web.Mvc;
@@ -13,7 +14,8 @@ namespace RSH.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewData["FormError"] = "Error";
+                TempData["ModalTitle"] = "Feil i skjemaet";
+                TempData["ModalBody"] = "Det ser ut som at skjemaet ikke har blitt riktig fylt ut. Prøv på nytt.";
                 return RedirectToUmbracoPage(nodeId);
             }
 
@@ -31,8 +33,19 @@ namespace RSH.Controllers
 
             var dbContext = ApplicationContext.DatabaseContext;
             var db = dbContext.Database;
-            db.Insert(booking);
+            try
+            {
+                db.Insert(booking);
+            }
+            catch (Exception e)
+            {
+                LogHelper.Error($"Feil under booking for [{submission.Name}, {submission.Telephone}]", e);
+                TempData["ModalTitle"] = "Feil i skjemaet";
+                TempData["ModalBody"] = "Det ser ut som at skjemaet ikke har blitt riktig fylt ut. Prøv på nytt.";
+            }
 
+            TempData["ModalTitle"] = "Vi har mottatt din forespørsel.";
+            TempData["ModalBody"] = "Vi kommer til å ta kontakt i løpet av de nærmeste dager for å bekrefte din reservasjon.";
             return RedirectToUmbracoPage(nodeId);
         }
 
