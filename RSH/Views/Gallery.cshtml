@@ -1,8 +1,35 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.Gallery>
 @using ContentModels = Umbraco.Web.PublishedContentModels;
 @{
-	Layout = "Master.cshtml";
+    Layout = "Master.cshtml";
     var images = Model.Content.GetPropertyValue<IEnumerable<IPublishedContent>>("images");
 }
 
+@section style {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.0/baguetteBox.min.css" integrity="sha256-cKiyvRKpm8RaTdU71Oq2RUVgvfWrdIXjvVdQF2oZ1Y4=" crossorigin="anonymous" />
+}
+
 @Html.GetGridHtml(Model.Content, "grid", "Bootstrap4")
+
+@if (images != null && images.Any())
+{
+    <section class="container">
+        <div class="row baguette">
+            @foreach (var image in images)
+            {
+                <a class="col-6 col-md-4 col-lg-3" href="@image.Url">
+                    <picture class="">
+                        <source media="(min-width: 1200px)" srcset="@image.Url?width=300">
+                        <source media="(min-width: 800px)" srcset="@image.Url?width=200">
+                        <img src="@image.Url?width=300" alt="@image.Name" class="img-fluid img-thumbnail my-3">
+                    </picture>
+                </a>
+            }
+
+        </div>
+    </section>
+}
+
+@section script{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.0/baguetteBox.min.js" integrity="sha256-yQGjQhFs3LtyiN5hhr3k9s9TWZOh/RzCkD3gwwCKlkg=" crossorigin="anonymous" onload="baguetteBox.run('.baguette');"></script>
+}
