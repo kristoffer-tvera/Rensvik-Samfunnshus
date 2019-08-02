@@ -266,6 +266,8 @@
     <Content Include="App_Plugins\Booking\lib\datepicker.js" />
     <Content Include="App_Plugins\Booking\old.controller.js" />
     <Content Include="App_Plugins\Booking\old.html" />
+    <Content Include="App_Plugins\Booking\overlay.controller.js" />
+    <Content Include="App_Plugins\Booking\overlay.html" />
     <Content Include="App_Plugins\Booking\style.css" />
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.controller.js" />
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.htm" />
@@ -294,6 +296,7 @@
     <Content Include="config\Lang\sv-SE.user.xml" />
     <Content Include="config\Lang\zh-CN.user.xml" />
     <Content Include="Content\site.css" />
+    <Content Include="Content\site.js" />
     <Content Include="Content\site.min.css">
       <DependentUpon>site.css</DependentUpon>
     </Content>
@@ -358,6 +361,8 @@
     <Content Include="scss\site.scss" />
     <Content Include="Views\Page.cshtml" />
     <Content Include="Views\Partials\_Banner_bannerImage.cshtml" />
+    <Content Include="Views\Partials\_Banner_bannerSmall.cshtml" />
+    <Content Include="Views\Gallery.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,57 @@
+﻿<div ng-controller="BookingOverlayController">
+    <div ng-if="ready">
+        <label>
+            <span>Navn</span>
+            <br />
+            <input type="text" ng-model="model.booking.name" />
+        </label>
+        <hr />
+        <label>
+            <span>Telefon</span>
+            <br />
+            <input type="text" ng-model="model.booking.Telephone" />
+        </label>
+        <hr />
+
+        <label>
+            <span>Område</span>
+            <br />
+            <input type="text" ng-model="model.booking.Area" />
+        </label>
+        <hr />
+
+        <label>
+            <span>Kommentar</span>
+            <br />
+            <textarea ng-model="model.booking.Comment">
+            </textarea>
+        </label>
+        <hr />
+
+        <label>
+            <input type="checkbox" ng-model="model.booking.Wash" ng-change="UpdateWash()" />
+            <span>Ønsker vask</span>
+        </label>
+        <hr />
+
+        <label>
+            <input type="checkbox" ng-model="model.booking.Approved" ng-change="UpdateApproved()" />
+            <span>Godtatt</span>
+        </label>
+        <hr />
+
+        <label>
+            <span>Fra</span>
+            <br />
+            <input type="date" ng-model="model.booking.From" />
+        </label>
+        <hr />
+
+        <label>
+            <span>Til</span>
+            <br />
+            <input type="date" ng-model="model.booking.To" />
+        </label>
+    </div>
+
+</div>

@@ -9,9 +9,13 @@ namespace RSH.Controllers
     {
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public bool Submit(BookingFormSubmission submission)
+        public ActionResult Submit(BookingFormSubmission submission, int nodeId = 0)
         {
-            if (!ModelState.IsValid) return false;
+            if (!ModelState.IsValid)
+            {
+                ViewData["FormError"] = "Error";
+                return RedirectToUmbracoPage(nodeId);
+            }
 
             var booking = new Booking
             {
@@ -20,7 +24,7 @@ namespace RSH.Controllers
                 To = submission.To,
                 Area = submission.Area,
                 Telephone = submission.Telephone,
-                Email = submission.Email,
+                Name = submission.Name,
                 Comment = submission.Comment,
                 Wash = submission.Wash
             };
@@ -29,7 +33,7 @@ namespace RSH.Controllers
             var db = dbContext.Database;
             db.Insert(booking);
 
-            return true;
+            return RedirectToUmbracoPage(nodeId);
         }
 
     }

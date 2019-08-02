@@ -1,40 +1,21 @@
 ﻿<div ng-controller="OldBookingController">
-    <h1>{{ title }}</h1>
-
-    <div>
-        <h3>Eldre forespørsler (eldre enn 2 mnd)</h3>
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Motatt</th>
-                    <th>Fra</th>
-                    <th>Til</th>
-                    <th>Område</th>
-                    <th>Telefon</th>
-                    <th>Epost</th>
-                    <th>Kommentar</th>
-                    <th>Ønsker nedvasking</th>
-                    <th>Godtatt</th>
-                    <th>Betalt</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="booking in bookings">
-                    <td>{{ booking.Requested | date:'dd-MM-yyyy'}}</td>
-                    <td>{{ booking.From | date:'dd-MM-yyyy'}}</td>
-                    <td>{{ booking.To | date:'dd-MM-yyyy'}}</td>
-                    <td>{{ booking.Area }}</td>
-                    <td>{{ booking.Telephone }}</td>
-                    <td>{{ booking.Email }}</td>
-                    <td>{{ booking.Comment }}</td>
-                    <td> <input type="checkbox" ng-model="booking.Wash" ng-disabled="true" /></td>
-                    <td> <input type="checkbox" ng-model="booking.Approved" /></td>
-                    <td> <input type="text" ng-model="booking.Payment" class="booking--date" /></td>
-                    <td> <button ng-click="save(booking.Id, booking.Requested, booking.From, booking.To, booking.Area, booking.Telephone, booking.Email, booking.Comment, booking.Wash, booking.Approved, booking.Payment)">Save</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <h1> Eldre bookingforespørsler (2+ måneder)</h1>
+    <umb-table ng-if="ready"
+               items="bookings"
+               item-properties="options.includeProperties"
+               allow-select-all="allowSelectAll"
+               on-select="selectItem"
+               on-click="clickItem"
+               on-select-all="selectAll"
+               on-selected-all="isSelectedAll"
+               on-sorting-direction="isSortDirection"
+               on-sort="sort">
+    </umb-table>
+    <umb-overlay ng-if="overlay.show"
+                 model="overlay"
+                 view="overlay.view"
+                 position="right"
+                 class="overview-dashboard__overlay">
+    </umb-overlay>
 
 </div>

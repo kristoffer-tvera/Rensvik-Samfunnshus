@@ -1,0 +1,8 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.Gallery>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+	Layout = "Master.cshtml";
+    var images = Model.Content.GetPropertyValue<IEnumerable<IPublishedContent>>("images");
+}
+
+@Html.GetGridHtml(Model.Content, "grid", "Bootstrap4")

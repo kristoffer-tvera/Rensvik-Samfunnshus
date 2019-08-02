@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using Umbraco.Core.Persistence;
 using Umbraco.Core.Persistence.DatabaseAnnotations;
 
@@ -28,9 +29,10 @@ namespace RSH.Models
         [Column("Telephone")]
         public string Telephone { get; set; } = "";
 
-        [Column("Email")]
+        [Column("Name")]
         [NullSetting(NullSetting = NullSettings.Null)]
-        public string Email { get; set; } = "";
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; } = "";
 
         [Column("Comment")]
         [NullSetting(NullSetting = NullSettings.Null)]

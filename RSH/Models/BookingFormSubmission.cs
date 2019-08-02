@@ -22,8 +22,8 @@ namespace RSH.Models
         [DisplayName("Telephone number")]
         public string Telephone { get; set; }
 
-        [DisplayName("Email")]
-        public string Email { get; set; } = "";
+        [DisplayName("Name")]
+        public string Name { get; set; } = "";
 
         [DisplayName("Comment")]
         public string Comment { get; set; } = "";
