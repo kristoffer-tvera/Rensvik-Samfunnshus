@@ -34,7 +34,7 @@
         var banner = Model.Content.GetPropertyValue<IEnumerable<IPublishedContent>>("banner")?.FirstOrDefault();
         if (banner != null)
         {
-            Html.RenderPartial($"~/Views/Partials/_Banner_{banner.DocumentTypeAlias}.cshtml", banner);
+            Html.RenderPartial($"~/Views/Partials/Banner/_{banner.DocumentTypeAlias}.cshtml", banner);
         }
     }
 

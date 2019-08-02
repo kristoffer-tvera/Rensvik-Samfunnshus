@@ -1,0 +1,42 @@
+﻿@model IPublishedContent
+@{
+    var image = Model.GetPropertyValue<IPublishedContent>("image");
+    var textString = Model.GetPropertyValue<string>("textstring");
+
+    var crop = image.GetCropUrl();
+}
+
+<section class="banner--small" id="banner">
+    @if (!string.IsNullOrWhiteSpace(textString))
+    {
+        <h1>@textString</h1>
+    }
+</section>
+<style>
+    #banner {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    #banner {
+        background-image: url('@(image.Url)?width=500');
+    }
+
+    @@media screen and (min-width: 500px){
+        #banner {
+            background-image: url('@(image.Url)?width=1000');
+        }
+    }
+
+    @@media screen and (min-width: 1000px){
+        #banner {
+            background-image: url('@(image.Url)?width=1500');
+        }
+    }
+
+    @@media screen and (min-width: 1500px){
+        #banner {
+            background-image: url('@(image.Url)');
+        }
+    }
+</style>

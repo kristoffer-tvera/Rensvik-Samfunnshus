@@ -295,6 +295,8 @@
     <Content Include="config\Lang\ru-RU.user.xml" />
     <Content Include="config\Lang\sv-SE.user.xml" />
     <Content Include="config\Lang\zh-CN.user.xml" />
+    <Content Include="Content\flatpickr\datepicker.css" />
+    <Content Include="Content\flatpickr\datepicker.js" />
     <Content Include="Content\site.css" />
     <Content Include="Content\site.js" />
     <Content Include="Content\site.min.css">
@@ -360,8 +362,8 @@
     <Content Include="Views\Partials\Grid\Bootstrap4.cshtml" />
     <Content Include="scss\site.scss" />
     <Content Include="Views\Page.cshtml" />
-    <Content Include="Views\Partials\_Banner_bannerImage.cshtml" />
-    <Content Include="Views\Partials\_Banner_bannerSmall.cshtml" />
+    <Content Include="Views\Partials\Banner\_bannerImage.cshtml" />
+    <Content Include="Views\Partials\Banner\_bannerSmall.cshtml" />
     <Content Include="Views\Gallery.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

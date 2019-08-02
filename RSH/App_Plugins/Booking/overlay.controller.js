@@ -11,6 +11,14 @@
                 ])
                 .then(function () {
                     $scope.ready = true;
+                    setTimeout(function () {
+                        flatpickr('[type="date"]',
+                            {
+                                dateFormat: 'Z',
+                                altInput: true,
+                                altFormat: 'd-m-Y'
+                            });
+                    }, 0);
                 });
             assetsService.loadCss(
                 "~/App_Plugins/Booking/lib/datepicker.css"

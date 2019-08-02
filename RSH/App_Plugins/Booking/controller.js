@@ -81,18 +81,23 @@
                     submit: function (model) {
 
                         $http.post(url + 'Save', model.booking).then(function (response) {
-                            selectedItem = model.booking;
+
+                            for (var i = 0; i < $scope.bookings.length; i++) {
+                                if ($scope.bookings[i].Id === model.booking.Id) {
+                                    $scope.bookings[i] = model.booking;
+                                    break;
+                                }
+                            }
                         });
 
                         $scope.overlay.show = false;
                         $scope.overlay = null;
                     },
                     close: function (oldModel) {
-                        // do close magic here
                         $scope.overlay.show = false;
                         $scope.overlay = null;
                     },
-                    booking: selectedItem
+                    booking: angular.copy(selectedItem)
                 };
             }
 

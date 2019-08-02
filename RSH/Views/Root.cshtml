@@ -3,7 +3,9 @@
 @{
     Layout = "Master.cshtml";
 }
-
+@section style {
+    <link href="~/Content/flatpickr/datepicker.css" rel="stylesheet" />
+}
 <section class="container" id="bookingForm">
 
     @using (Html.BeginUmbracoForm("Submit", "BookingSurface"))
@@ -57,3 +59,15 @@
 </section>
 
 @Html.GetGridHtml(Model.Content, "grid", "Bootstrap4")
+
+@section script {
+    <script src="~/Content/flatpickr/datepicker.js"></script>
+    <script type="text/javascript">
+        function autorun() {
+            flatpickr("#fraDato", {});
+        }
+        if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false);
+        else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun);
+        else window.onload = autorun;
+    </script>
+}
