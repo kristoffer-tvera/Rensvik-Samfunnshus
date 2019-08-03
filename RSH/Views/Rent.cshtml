@@ -1,5 +1,6 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.Rent>
 @using ContentModels = Umbraco.Web.PublishedContentModels;
+@using System.Globalization;
 @{
     Layout = "Master.cshtml";
     var modalTitle = TempData["ModalTitle"] as string;
@@ -11,6 +12,15 @@
 }
 
 @Html.GetGridHtml(Model.Content, "grid", "Bootstrap4")
+
+<section class="container my-3 py-3">
+
+    @RenderMonth(DateTime.Now.Year, DateTime.Now.Month)
+    @RenderMonth(DateTime.Now.AddMonths(1).Year, DateTime.Now.AddMonths(1).Month)
+    @RenderMonth(DateTime.Now.AddMonths(2).Year, DateTime.Now.AddMonths(2).Month)
+    @RenderMonth(DateTime.Now.AddMonths(3).Year, DateTime.Now.AddMonths(3).Month)
+
+</section>
 
 <section class="container my-3 py-3" id="bookingForm">
 
@@ -64,8 +74,6 @@
     }
 </section>
 
-
-
 <div class="modal" tabindex="-1" role="dialog" id="bookingmodal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -105,4 +113,72 @@
         else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun);
         else window.onload = autorun;
     </script>
+}
+
+@helper RenderMonth(int year, int month)
+{
+    <div class="row">
+        @{
+            var date = new DateTime(year, month, 1);
+        }
+        <h2 class="col-12 text-capitalize text-center">@(date.ToString("MMMM", CultureInfo.CreateSpecificCulture("no")))</h2>
+        <hr class="col-12" />
+        <div class="col-12">
+            <div class="row">
+                <p class="col text-center">M<span class="d-none d-md-inline">andag</span></p>
+                <p class="col text-center">T<span class="d-none d-md-inline">irsdag</span></p>
+                <p class="col text-center">O<span class="d-none d-md-inline">nsdag</span></p>
+                <p class="col text-center">T<span class="d-none d-md-inline">orsdag</span></p>
+                <p class="col text-center">F<span class="d-none d-md-inline">redag</span></p>
+                <p class="col text-center">L<span class="d-none d-md-inline">ørdag</span></p>
+                <p class="col text-center">S<span class="d-none d-md-inline">øndag</span></p>
+            </div>
+            <div class="row">
+                @for (var i = 6; i > 6 - WeekDayNumber(date.DayOfWeek); i--)
+                {
+                    <p class="col p-1 m-1 text-center"></p>
+                }
+
+                @for (var i = 1; i <= DateTime.DaysInMonth(year, month); i++)
+                {
+                    if (date.DayOfWeek == DayOfWeek.Monday)
+                    {
+                        <span class="col-12"></span>
+                    }
+                    <p class="col p-1 m-1 text-center">@i</p>
+                    date = date.AddDays(1);
+                }
+
+                @for (var i = 0; i < 7 - (int)date.AddDays(-1).DayOfWeek; i++)
+                {
+                    <p class="col p-1 m-1 text-center"></p>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@functions{
+    private static int WeekDayNumber(DayOfWeek dayOfWeek)
+    {
+        switch (dayOfWeek)
+        {
+            case DayOfWeek.Monday:
+                return 0;
+            case DayOfWeek.Tuesday:
+                return 1;
+            case DayOfWeek.Wednesday:
+                return 2;
+            case DayOfWeek.Thursday:
+                return 3;
+            case DayOfWeek.Friday:
+                return 4;
+            case DayOfWeek.Saturday:
+                return 5;
+            case DayOfWeek.Sunday:
+                return 6;
+            default:
+                return 0;
+        }
+    }
 }
