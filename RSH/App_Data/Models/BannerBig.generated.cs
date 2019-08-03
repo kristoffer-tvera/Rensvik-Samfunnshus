@@ -20,16 +20,16 @@ using Umbraco.ModelsBuilder.Umbraco;
 
 namespace Umbraco.Web.PublishedContentModels
 {
-	/// <summary>Banner - Image</summary>
-	[PublishedContentModel("bannerImage")]
-	public partial class BannerImage : PublishedContentModel
+	/// <summary>Banner - Big</summary>
+	[PublishedContentModel("bannerBig")]
+	public partial class BannerBig : PublishedContentModel
 	{
 #pragma warning disable 0109 // new is redundant
-		public new const string ModelTypeAlias = "bannerImage";
+		public new const string ModelTypeAlias = "bannerBig";
 		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
 #pragma warning restore 0109
 
-		public BannerImage(IPublishedContent content)
+		public BannerBig(IPublishedContent content)
 			: base(content)
 		{ }
 
@@ -40,7 +40,7 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 #pragma warning restore 0109
 
-		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<BannerImage, TValue>> selector)
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<BannerBig, TValue>> selector)
 		{
 			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
 		}
@@ -52,6 +52,15 @@ namespace Umbraco.Web.PublishedContentModels
 		public IPublishedContent Image
 		{
 			get { return this.GetPropertyValue<IPublishedContent>("image"); }
+		}
+
+		///<summary>
+		/// Links
+		///</summary>
+		[ImplementPropertyType("links")]
+		public Umbraco.Web.Models.RelatedLinks Links
+		{
+			get { return this.GetPropertyValue<Umbraco.Web.Models.RelatedLinks>("links"); }
 		}
 
 		///<summary>

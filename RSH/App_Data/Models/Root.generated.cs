@@ -46,6 +46,33 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
+		/// Besøksadresse
+		///</summary>
+		[ImplementPropertyType("besoeksadresse")]
+		public string Besoeksadresse
+		{
+			get { return this.GetPropertyValue<string>("besoeksadresse"); }
+		}
+
+		///<summary>
+		/// Postadresse
+		///</summary>
+		[ImplementPropertyType("postadresse")]
+		public string Postadresse
+		{
+			get { return this.GetPropertyValue<string>("postadresse"); }
+		}
+
+		///<summary>
+		/// Telefon
+		///</summary>
+		[ImplementPropertyType("telefon")]
+		public string Telefon
+		{
+			get { return this.GetPropertyValue<string>("telefon"); }
+		}
+
+		///<summary>
 		/// Banner
 		///</summary>
 		[ImplementPropertyType("banner")]

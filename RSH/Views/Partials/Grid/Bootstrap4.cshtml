@@ -16,11 +16,11 @@
 @helper renderRow(dynamic row)
 {
     <div @RenderElementAttributes(row)>
-        <div class="container my-4 py-4">
+        <div class="container my-2 my-md-3 py-2 py-md-3">
             <div class="row">
                 @foreach (var area in row.areas)
                 {
-                    <div class="col-md-@area.grid column">
+                    <div class="col-md-@area.grid column py-2">
                         <div @RenderElementAttributes(area)>
                             @foreach (var control in area.controls)
                             {

@@ -10,6 +10,8 @@
     <link href="~/Content/flatpickr/datepicker.css" rel="stylesheet" />
 }
 
+@Html.GetGridHtml(Model.Content, "grid", "Bootstrap4")
+
 <section class="container my-3 py-3" id="bookingForm">
 
     @using (Html.BeginUmbracoForm("Submit", "BookingSurface"))
@@ -62,7 +64,7 @@
     }
 </section>
 
-@Html.GetGridHtml(Model.Content, "grid", "Bootstrap4")
+
 
 <div class="modal" tabindex="-1" role="dialog" id="bookingmodal">
     <div class="modal-dialog" role="document">

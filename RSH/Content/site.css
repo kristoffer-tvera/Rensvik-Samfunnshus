@@ -14,7 +14,8 @@ body {
   .banner--big > h1 {
     margin: 0;
     padding: 1rem 2rem;
-    background-color: rgba(255, 255, 255, 0.5); }
+    background-color: rgba(255, 255, 255, 0.5);
+    text-align: center; }
 
 .banner--small {
   height: 450px;
@@ -26,4 +27,8 @@ body {
   .banner--small > h1 {
     margin: 0;
     padding: 1rem 2rem;
-    background-color: rgba(255, 255, 255, 0.5); }
+    background-color: rgba(255, 255, 255, 0.5);
+    text-align: center; }
+
+.ws--pre-wrap {
+  white-space: pre-wrap; }

@@ -362,11 +362,11 @@
     <Content Include="Views\Partials\Grid\Bootstrap4.cshtml" />
     <Content Include="scss\site.scss" />
     <Content Include="Views\Page.cshtml" />
-    <Content Include="Views\Partials\Banner\_bannerImage.cshtml" />
     <Content Include="Views\Partials\Banner\_bannerSmall.cshtml" />
     <Content Include="Views\Gallery.cshtml" />
     <Content Include="Views\Rent.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Views\Partials\Banner\_bannerBig.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
