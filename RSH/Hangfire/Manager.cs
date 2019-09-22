@@ -64,16 +64,18 @@ namespace RSH.Hangfire
                 emailBody += "Ingen bookinger";
             }
 
+            var sentEmails = 0;
             using (var client = new SmtpClient())
             {
                 foreach (var recipient in emails)
                 {
                     var mail = new MailMessage("debug@bzl.no", recipient, $"Rensvik Samfunnshus, uke {weekNumber}", emailBody);
                     client.Send(mail);
+                    sentEmails++;
                 }
             }
 
-            return "Hello world";
+            return $"Sent {sentEmails} emails, to following list of recipients: {summaryEmailRecipients}";
         }
     }
 }
