@@ -8,7 +8,7 @@ namespace RSH.Controllers
 {
     public class RentController : Umbraco.Web.Mvc.RenderMvcController
     {
-        public ActionResult Index(RenderModel model)
+        public override ActionResult Index(RenderModel model)
         {
             var viewModel = new RentViewModel(model.Content, model.CurrentCulture);
 

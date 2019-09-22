@@ -3209,6 +3209,9 @@
         if (!$scope.model.title) {
             $scope.model.title = localizationService.localize('defaultdialogs_selectItem');
         }
+        if (!$scope.model.orderBy) {
+            $scope.model.orderBy = 'name';
+        }
         $scope.model.hideSubmitButton = true;
         $scope.selectItem = function (item) {
             $scope.model.selectedItem = item;
@@ -3714,7 +3717,8 @@
                 $scope.gotoFolder({
                     id: $scope.lastOpenedNode,
                     name: 'Media',
-                    icon: 'icon-folder'
+                    icon: 'icon-folder',
+                    path: node.path
                 });
                 return true;
             } else {
@@ -5409,7 +5413,7 @@
                         location = '/content/content/edit/' + $scope.currentNode.parentId;
                     $location.path(location);
                 }
-                navigationService.hideMenu();
+                $scope.success = true;
             }, function (err) {
                 $scope.currentNode.loading = false;
                 $scope.busy = false;
@@ -8134,7 +8138,7 @@
                         location = '/media/media/edit/' + $scope.currentNode.parentId;
                     $location.path(location);
                 }
-                navigationService.hideMenu();
+                $scope.success = true;
             }, function (err) {
                 $scope.currentNode.loading = false;
                 $scope.busy = false;
@@ -15132,7 +15136,7 @@
             });
         };
         $scope.publish = function () {
-            applySelected(function (selected, index) {
+            var attempt = applySelected(function (selected, index) {
                 return contentResource.publishById(getIdCallback(selected[index]));
             }, function (count, total) {
                 var key = total === 1 ? 'bulk_publishedItemOfItem' : 'bulk_publishedItemOfItems';
@@ -15144,9 +15148,14 @@
                 var key = total === 1 ? 'bulk_publishedItem' : 'bulk_publishedItems';
                 return localizationService.localize(key, [total]);
             });
+            if (attempt) {
+                attempt.then(function () {
+                    $scope.getContent();
+                });
+            }
         };
         $scope.unpublish = function () {
-            applySelected(function (selected, index) {
+            var attempt = applySelected(function (selected, index) {
                 return contentResource.unPublish(getIdCallback(selected[index]));
             }, function (count, total) {
                 var key = total === 1 ? 'bulk_unpublishedItemOfItem' : 'bulk_unpublishedItemOfItems';
@@ -15158,6 +15167,11 @@
                 var key = total === 1 ? 'bulk_unpublishedItem' : 'bulk_unpublishedItems';
                 return localizationService.localize(key, [total]);
             });
+            if (attempt) {
+                attempt.then(function () {
+                    $scope.getContent();
+                });
+            }
         };
         $scope.move = function () {
             $scope.moveDialog = {};
@@ -16190,7 +16204,7 @@
                 view: 'linkpicker',
                 currentTarget: target,
                 dataTypeId: $scope.model && $scope.model.dataTypeId ? $scope.model.dataTypeId : null,
-                ignoreUserStartNodes: $scope.model.config.ignoreUserStartNodes,
+                ignoreUserStartNodes: $scope.model.config && $scope.model.config.ignoreUserStartNodes ? $scope.model.config.ignoreUserStartNodes : '0',
                 show: true,
                 submit: function (model) {
                     if (model.target.url || model.target.anchor) {
@@ -16352,6 +16366,7 @@
                     show: false,
                     style: {},
                     filter: $scope.scaffolds.length > 15 ? true : false,
+                    orderBy: '$index',
                     view: 'itempicker',
                     event: $event,
                     submit: function (model) {

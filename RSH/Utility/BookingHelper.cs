@@ -15,7 +15,7 @@ namespace RSH.Utility
         {
             if(MemoryCache.Default.Get("bookings") is List<Booking> bookings)
             {
-                return bookings.FindAll(element => element.To >= DateTime.UtcNow.AddMonths(-2);
+                return bookings.FindAll(element => element.To >= DateTime.UtcNow.AddMonths(-2));
             }
 
             var dbContext = ApplicationContext.Current.DatabaseContext;
@@ -34,7 +34,7 @@ namespace RSH.Utility
         {
             if (MemoryCache.Default.Get("bookings") is List<Booking> bookings)
             {
-                return bookings.FindAll(element => element.To >= DateTime.UtcNow.AddMonths(-2);
+                return bookings.FindAll(element => element.To <= DateTime.UtcNow.AddMonths(-2));
             }
 
             var dbContext = ApplicationContext.Current.DatabaseContext;

@@ -2316,12 +2316,19 @@ Use this directive to render a button with a dropdown of alternative actions.
                 createButtons(content);
                 editorState.set($scope.content);
                 //We fetch all ancestors of the node to generate the footer breadcrumb navigation
-                if (!$scope.page.isNew) {
-                    if (content.parentId && content.parentId !== -1) {
-                        entityResource.getAncestors(content.id, 'document').then(function (anc) {
-                            $scope.ancestors = anc;
-                        });
+                if (content.parentId && content.parentId !== -1) {
+                    var ancestorIds = content.path.split(',');
+                    ancestorIds.shift();
+                    // Remove -1   
+                    if ($scope.page.isNew) {
+                        ancestorIds.pop();    // Remove 0
                     }
+                    entityResource.getByIds(ancestorIds, 'document').then(function (anc) {
+                        $scope.ancestors = anc;
+                        if ($scope.page.isNew) {
+                            $scope.ancestors.push({ name: 'Untitled' });
+                        }
+                    });
                 }
                 evts.push(eventsService.on('editors.content.changePublishDate', function (event, args) {
                     createButtons(args.node);
@@ -2438,6 +2445,9 @@ Use this directive to render a button with a dropdown of alternative actions.
                 //we are creating so get an empty content item
                 $scope.getScaffoldMethod()().then(function (data) {
                     $scope.content = data;
+                    if (data.isChildOfListView && data.trashed === false) {
+                        $scope.page.listViewPath = $routeParams.page ? '/content/content/edit/' + data.parentId + '?page=' + $routeParams.page : '/content/content/edit/' + data.parentId;
+                    }
                     init($scope.content);
                     resetLastListPageNumber($scope.content);
                     $scope.page.loading = false;
@@ -5887,7 +5897,7 @@ Use this directive to construct a title. Recommended to use it inside an {@link 
     });
     (function () {
         'use strict';
-        function MediaNodeInfoDirective($timeout, $location, eventsService, userService, dateHelper) {
+        function MediaNodeInfoDirective($timeout, $location, eventsService, userService, dateHelper, mediaHelper) {
             function link(scope, element, attrs, ctrl) {
                 var evts = [];
                 function onInit() {
@@ -5901,6 +5911,8 @@ Use this directive to construct a title. Recommended to use it inside an {@link 
                     setMediaLink();
                     // make sure dates are formatted to the user's locale
                     formatDatesToLocal();
+                    // set media file extension initially
+                    setMediaExtension();
                 }
                 function formatDatesToLocal() {
                     // get current backoffice user and format dates
@@ -5912,10 +5924,20 @@ Use this directive to construct a title. Recommended to use it inside an {@link 
                 function setMediaLink() {
                     scope.nodeUrl = scope.node.mediaLink;
                 }
+                function setMediaExtension() {
+                    scope.node.extension = mediaHelper.getFileExtension(scope.nodeUrl);
+                }
                 scope.openMediaType = function (mediaType) {
                     // remove first "#" from url if it is prefixed else the path won't work
                     var url = '/settings/mediaTypes/edit/' + mediaType.id;
                     $location.path(url);
+                };
+                scope.openSVG = function () {
+                    var popup = window.open('', '_blank');
+                    var html = '<!DOCTYPE html><body><img src="' + scope.nodeUrl + '"/>' + '<script>history.pushState(null, null,"' + $location.$$absUrl + '");</script></body>';
+                    popup.document.open();
+                    popup.document.write(html);
+                    popup.document.close();
                 };
                 // watch for content updates - reload content when node is saved, published etc.
                 scope.$watch('node.updateDate', function (newValue, oldValue) {
@@ -5929,6 +5951,8 @@ Use this directive to construct a title. Recommended to use it inside an {@link 
                     setMediaLink();
                     // Update the create and update dates
                     formatDatesToLocal();
+                    //Update the media file format
+                    setMediaExtension();
                 });
                 //ensure to unregister from all events!
                 scope.$on('$destroy', function () {
