@@ -1,5 +1,6 @@
 ﻿using log4net;
 using System;
+using System.Reflection;
 
 namespace RSH.Utility
 {
@@ -22,6 +23,11 @@ namespace RSH.Utility
         {
             if (Log4Net.IsInfoEnabled)
                 Log4Net.Info(message, exception);
+        }
+
+        internal static string MethodInfo(MethodBase methodBase)
+        {
+            return methodBase.Name;
         }
 
         public static void Warning(string message, Exception exception = null)

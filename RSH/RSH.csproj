@@ -316,9 +316,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\Events.cs" />
+    <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\BookingSurfaceController.cs" />
     <Compile Include="Controllers\RentController.cs" />
+    <Compile Include="Hangfire\AuthorizationFilter.cs" />
+    <Compile Include="Hangfire\Config.cs" />
+    <Compile Include="Hangfire\Manager.cs" />
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\BookingFormSubmission.cs" />
     <Compile Include="Models\RentViewModel.cs" />

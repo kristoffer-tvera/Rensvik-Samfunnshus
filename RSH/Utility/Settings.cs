@@ -7,6 +7,7 @@ namespace RSH.Utility
     public class Settings
     {
         public static string UmbracoVersion => Setting<string>("umbracoConfigurationStatus");
+        public static string SummaryEmailRecipients => Setting<string>("SummaryEmailRecipients");
 
         private static T Setting<T>(string name)
         {
