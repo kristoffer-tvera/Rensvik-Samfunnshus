@@ -23,13 +23,13 @@ namespace RSH.Controllers
         [HttpGet]
         public IEnumerable<Booking> Load()
         {
-            return BookingHelper.Load();
+            return BookingHelper.Get();
         }
 
         [HttpGet]
         public IEnumerable<Booking> LoadOld()
         {
-            return BookingHelper.LoadOld();
+            return BookingHelper.GetOld();
         }
 
     }

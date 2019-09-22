@@ -32,3 +32,8 @@ body {
 
 .ws--pre-wrap {
   white-space: pre-wrap; }
+
+.busy {
+  color: #fff;
+  background-color: #f00;
+  cursor: not-allowed; }

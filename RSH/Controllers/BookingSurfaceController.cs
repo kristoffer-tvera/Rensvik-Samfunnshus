@@ -31,11 +31,9 @@ namespace RSH.Controllers
                 Wash = submission.Wash
             };
 
-            var dbContext = ApplicationContext.DatabaseContext;
-            var db = dbContext.Database;
             try
             {
-                db.Insert(booking);
+                BookingHelper.New(booking);
             }
             catch (Exception e)
             {

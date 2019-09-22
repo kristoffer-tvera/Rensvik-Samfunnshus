@@ -1,9 +1,7 @@
 ﻿using RSH.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Caching;
-using System.Web;
 using Umbraco.Core;
 using Umbraco.Core.Persistence;
 
@@ -11,7 +9,7 @@ namespace RSH.Utility
 {
     public static class BookingHelper
     {
-        public static IEnumerable<Booking> Load()
+        public static IEnumerable<Booking> Get()
         {
             if(MemoryCache.Default.Get("bookings") is List<Booking> bookings)
             {
@@ -30,7 +28,7 @@ namespace RSH.Utility
             return bookings.FindAll(element => element.To >= DateTime.UtcNow.AddMonths(-2));
         }
 
-        public static IEnumerable<Booking> LoadOld()
+        public static IEnumerable<Booking> GetOld()
         {
             if (MemoryCache.Default.Get("bookings") is List<Booking> bookings)
             {

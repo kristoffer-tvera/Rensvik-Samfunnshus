@@ -12,7 +12,7 @@ namespace RSH.Controllers
         {
             var viewModel = new RentViewModel(model.Content, model.CurrentCulture);
 
-            var currentBookings = BookingHelper.Load();
+            var currentBookings = BookingHelper.Get();
 
             viewModel.CurrentBookings = currentBookings.Where(booking => booking.Approved).Select(booking => booking.From);
 

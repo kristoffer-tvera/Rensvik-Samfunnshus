@@ -1,5 +1,4 @@
-﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.Rent>
-@using ContentModels = Umbraco.Web.PublishedContentModels;
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<RSH.Models.RentViewModel>
 @using System.Globalization;
 @{
     Layout = "Master.cshtml";
@@ -15,10 +14,10 @@
 
 <section class="container my-3 py-3">
 
-    @RenderMonth(DateTime.Now.Year, DateTime.Now.Month)
-    @RenderMonth(DateTime.Now.AddMonths(1).Year, DateTime.Now.AddMonths(1).Month)
-    @RenderMonth(DateTime.Now.AddMonths(2).Year, DateTime.Now.AddMonths(2).Month)
-    @RenderMonth(DateTime.Now.AddMonths(3).Year, DateTime.Now.AddMonths(3).Month)
+    @RenderMonth(DateTime.Now.Year, DateTime.Now.Month, Model.CurrentBookings)
+    @RenderMonth(DateTime.Now.AddMonths(1).Year, DateTime.Now.AddMonths(1).Month, Model.CurrentBookings)
+    @RenderMonth(DateTime.Now.AddMonths(2).Year, DateTime.Now.AddMonths(2).Month, Model.CurrentBookings)
+    @RenderMonth(DateTime.Now.AddMonths(3).Year, DateTime.Now.AddMonths(3).Month, Model.CurrentBookings)
 
 </section>
 
@@ -115,7 +114,7 @@
     </script>
 }
 
-@helper RenderMonth(int year, int month)
+@helper RenderMonth(int year, int month, IEnumerable<DateTime> booked)
 {
     <div class="row">
         @{
@@ -145,7 +144,14 @@
                     {
                         <span class="col-12"></span>
                     }
-                    <p class="col p-1 m-1 text-center">@i</p>
+                    if (booked.Contains(date))
+                    {
+                        <p class="col p-1 m-1 text-center busy">@i</p>
+                    }
+                    else
+                    {
+                        <p class="col p-1 m-1 text-center">@i</p>
+                    }
                     date = date.AddDays(1);
                 }
 
