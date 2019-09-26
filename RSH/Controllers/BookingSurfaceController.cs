@@ -23,12 +23,11 @@ namespace RSH.Controllers
             {
                 Requested = DateTime.UtcNow,
                 From = submission.From,
-                To = submission.To,
+                To = submission.To ?? submission.From,
                 Area = submission.Area,
                 Telephone = submission.Telephone,
                 Name = submission.Name,
-                Comment = submission.Comment,
-                Wash = submission.Wash
+                Comment = submission.Comment
             };
 
             try

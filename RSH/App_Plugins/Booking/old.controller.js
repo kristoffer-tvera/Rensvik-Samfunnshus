@@ -7,33 +7,44 @@
             $scope.bookings = [];
             $scope.ready = false;
 
-            assetsService
-                .load([
-                    "~/App_Plugins/Booking/lib/datepicker.js"
-                ])
-                .then(function () {
-                    initialize();
-                });
-            assetsService.loadCss(
-                "~/App_Plugins/Booking/lib/datepicker.css"
-            );
-
             var url = '/umbraco/backoffice/api/Booking/';
 
-            function initialize() {
-                $http.get(url + 'LoadOld').then(function (response) {
-                    $scope.bookings = response.data;
-                    $scope.ready = true;
-                });
-            }
+            $http.get(url + 'LoadOld').then(function (response) {
+
+                for (var i = 0; i < response.data.length; i++) {
+                    var data = response.data[i];
+
+                    if (data.Approved === true) {
+                        data.ApprovedDisplay = '✔';
+                    } else {
+                        data.ApprovedDisplay = '❌';
+                    }
+
+                    try {
+                        data.From = new Date(data.From).toISOString().substring(0, 10);
+                    } catch (e) {
+                        //ignored
+                    }
+
+                    try {
+                        data.To = new Date(data.To).toISOString().substring(0, 10);
+                    } catch (e) {
+                        //ignored
+                    }
+
+                    $scope.bookings.push(data);
+                }
+
+                $scope.ready = true;
+            });
 
             $scope.options = {
                 includeProperties: [
-                    { alias: "Norsk", header: "Norsk" },
-                    { alias: "Nynorsk", header: "Nynorsk" },
-                    { alias: "Engelsk", header: "Engelsk" },
-                    { alias: "Others", header: "Andre språk" },
-                    { alias: "LastUpdated", header: "Sist oppdatert" }
+                    { alias: "Telephone", header: "Telefon" },
+                    { alias: "Area", header: "Område" },
+                    { alias: "From", header: "Fra" },
+                    { alias: "To", header: "Til" },
+                    { alias: "ApprovedDisplay", header: "Godkjent" }
                 ]
             };
 
@@ -53,25 +64,29 @@
             }
 
             function clickItem(item) {
+                OpenOverlay(item);
             }
 
             function selectItem(selectedItem, $index, $event) {
+                OpenOverlay(selectedItem);
+            }
+
+            function OpenOverlay(item) {
                 $scope.overlay = {
                     view: "/App_Plugins/Booking/overlay.html",
                     title: "Booking",
                     show: true,
-                    hideSubmitButton: true,
+                    hideSubmitButton: false,
                     submit: function (model) {
-                        // do submit magic here
+
                         $scope.overlay.show = false;
                         $scope.overlay = null;
                     },
                     close: function (oldModel) {
-                        // do close magic here
                         $scope.overlay.show = false;
                         $scope.overlay = null;
                     },
-                    location: selectedItem.id
+                    booking: angular.copy(item)
                 };
             }
 

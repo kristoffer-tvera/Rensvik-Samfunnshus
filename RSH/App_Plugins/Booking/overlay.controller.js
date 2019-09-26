@@ -3,26 +3,7 @@
 
     angular
         .module('umbraco')
-        .controller('BookingOverlayController', function ($scope, $http, assetsService) {
-            $scope.ready = false;
-            assetsService
-                .load([
-                    "~/App_Plugins/Booking/lib/datepicker.js"
-                ])
-                .then(function () {
-                    $scope.ready = true;
-                    setTimeout(function () {
-                        flatpickr('[type="date"]',
-                            {
-                                dateFormat: 'Z',
-                                altInput: true,
-                                altFormat: 'd-m-Y'
-                            });
-                    }, 0);
-                });
-            assetsService.loadCss(
-                "~/App_Plugins/Booking/lib/datepicker.css"
-            );
+        .controller('BookingOverlayController', function ($scope) {
 
             $scope.UpdateApproved = function () {
                 if ($scope.model.booking.Approved === true) {

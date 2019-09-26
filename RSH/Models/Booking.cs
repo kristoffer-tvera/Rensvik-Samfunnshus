@@ -36,10 +36,8 @@ namespace RSH.Models
 
         [Column("Comment")]
         [NullSetting(NullSetting = NullSettings.Null)]
+        [SpecialDbType(SpecialDbTypes.NTEXT)]
         public string Comment { get; set; } = "";
-
-        [Column("Wash")]
-        public bool Wash { get; set; }
 
         [Column("Approved")]
         public bool Approved { get; set; }

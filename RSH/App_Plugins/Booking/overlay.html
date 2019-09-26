@@ -1,56 +1,50 @@
 ﻿<div ng-controller="BookingOverlayController">
-    <div ng-if="ready">
-        <label>
+    <div>
+        <label class="overlay__label">
             <span>Navn</span>
             <br />
-            <input type="text" ng-model="model.booking.name" />
+            <input type="text" ng-model="model.booking.name" class="overlay__input"/>
         </label>
         <hr />
-        <label>
+        <label class="overlay__label">
             <span>Telefon</span>
             <br />
-            <input type="text" ng-model="model.booking.Telephone" />
+            <input type="text" ng-model="model.booking.Telephone" class="overlay__input"/>
         </label>
         <hr />
 
-        <label>
+        <label class="overlay__label">
             <span>Område</span>
             <br />
-            <input type="text" ng-model="model.booking.Area" />
+            <input type="text" ng-model="model.booking.Area" class="overlay__input"/>
         </label>
         <hr />
 
-        <label>
+        <label class="overlay__label">
             <span>Kommentar</span>
             <br />
-            <textarea ng-model="model.booking.Comment">
+            <textarea ng-model="model.booking.Comment" class="overlay__input" rows="8">
             </textarea>
         </label>
         <hr />
 
-        <label>
-            <input type="checkbox" ng-model="model.booking.Wash" ng-change="UpdateWash()" />
-            <span>Ønsker vask</span>
-        </label>
-        <hr />
-
-        <label>
+        <label class="overlay__label">
             <input type="checkbox" ng-model="model.booking.Approved" ng-change="UpdateApproved()" />
             <span>Godtatt</span>
         </label>
         <hr />
 
-        <label>
+        <label class="overlay__label">
             <span>Fra</span>
             <br />
-            <input type="date" ng-model="model.booking.From" />
+            <input type="date" ng-model="model.booking.From" class="overlay__input"/>
         </label>
         <hr />
 
-        <label>
+        <label class="overlay__label">
             <span>Til</span>
             <br />
-            <input type="date" ng-model="model.booking.To" />
+            <input type="date" ng-model="model.booking.To" class="overlay__input"/>
         </label>
     </div>
 

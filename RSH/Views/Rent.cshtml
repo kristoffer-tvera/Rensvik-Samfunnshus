@@ -12,15 +12,6 @@
 
 @Html.GetGridHtml(Model.Content, "grid", "Bootstrap4")
 
-<section class="container my-3 py-3">
-
-    @RenderMonth(DateTime.Now.Year, DateTime.Now.Month, Model.CurrentBookings)
-    @RenderMonth(DateTime.Now.AddMonths(1).Year, DateTime.Now.AddMonths(1).Month, Model.CurrentBookings)
-    @RenderMonth(DateTime.Now.AddMonths(2).Year, DateTime.Now.AddMonths(2).Month, Model.CurrentBookings)
-    @RenderMonth(DateTime.Now.AddMonths(3).Year, DateTime.Now.AddMonths(3).Month, Model.CurrentBookings)
-
-</section>
-
 <section class="container my-3 py-3" id="bookingForm">
 
     @using (Html.BeginUmbracoForm("Submit", "BookingSurface"))
@@ -30,16 +21,16 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="inputName">Navn</label>
-                <input type="text" class="form-control" id="inputName" placeholder="Navn" name="Name">
+                <input type="text" class="form-control" id="inputName" placeholder="Navn" name="Name" required="required">
             </div>
             <div class="form-group col-md-6">
                 <label for="inputTelephone">Telefon</label>
-                <input type="text" class="form-control" id="inputTelephone" placeholder="Telefon" name="Telephone">
+                <input type="text" class="form-control" id="inputTelephone" placeholder="Telefon" name="Telephone" required="required">
             </div>
         </div>
         <div class="form-group">
             <label for="exampleFormControlSelect1">Ønsket område</label>
-            <select class="form-control" id="exampleFormControlSelect1" name="Area">
+            <select class="form-control" id="exampleFormControlSelect1" name="Area" required="required">
                 <option selected disabled>Velg en</option>
                 <option>Lille sal</option>
                 <option>Store sal</option>
@@ -50,27 +41,38 @@
             <label for="exampleFormControlTextarea1">Example textarea</label>
             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Kommentar/ønsker" name="Comment"></textarea>
         </div>
+
         <div class="form-group">
             <div class="form-check">
-                <input type="hidden" name="Wash" value="False">
-                <input class="form-check-input" type="checkbox" id="gridCheck" name="Wash" value="True">
-                <label class="form-check-label" for="gridCheck">
-                    Ønsker vasking
+                <input class="form-check-input" type="checkbox" id="expandDate" onclick="toggleTilDato()">
+                <label class="form-check-label" for="expandDate">
+                    Ønsker leie over flere dager
                 </label>
             </div>
         </div>
+
         <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col">
                 <label for="fraDato">Dato</label>
-                <input type="date" class="form-control flatpicker" id="fraDato" placeholder="Fra dato" name="From">
+                <input type="date" class="form-control flatpicker" id="fraDato" placeholder="Fra dato" name="From" required="required">
             </div>
-            <div class="form-group col-md-6">
+            <div class="col-12 d-md-none"></div>
+            <div class="form-group col d-none" id="tilDatoWrapper">
                 <label for="tilDato">Til</label>
                 <input type="date" class="form-control flatpicker" id="tilDato" placeholder="Til dato" name="To">
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Send</button>
     }
+</section>
+
+<section class="container my-3 py-3">
+
+    @RenderMonth(DateTime.Now.Year, DateTime.Now.Month, Model.CurrentBookings)
+    @RenderMonth(DateTime.Now.AddMonths(1).Year, DateTime.Now.AddMonths(1).Month, Model.CurrentBookings)
+    @RenderMonth(DateTime.Now.AddMonths(2).Year, DateTime.Now.AddMonths(2).Month, Model.CurrentBookings)
+    @RenderMonth(DateTime.Now.AddMonths(3).Year, DateTime.Now.AddMonths(3).Month, Model.CurrentBookings)
+
 </section>
 
 <div class="modal" tabindex="-1" role="dialog" id="bookingmodal">
@@ -95,28 +97,17 @@
 @section script {
     <script src="~/Content/flatpickr/datepicker.js"></script>
     <script type="text/javascript">
-        function autorun() {
-            flatpickr(".flatpicker", {
-                dateFormat: 'Z',
-                altInput: true,
-                altFormat: 'd-m-Y',
-                minDate: "today",
-            });
 
-            @if(!string.IsNullOrWhiteSpace(modalTitle) && !string.IsNullOrWhiteSpace(modalBody))
+        @if(!string.IsNullOrWhiteSpace(modalTitle) && !string.IsNullOrWhiteSpace(modalBody))
             {
                 <text>$('#bookingmodal').modal('show');</text>
             }
-        }
-        if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false);
-        else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun);
-        else window.onload = autorun;
     </script>
 }
 
 @helper RenderMonth(int year, int month, IEnumerable<DateTime> booked)
 {
-    <div class="row">
+    <div class="row pt-5">
         @{
             var date = new DateTime(year, month, 1);
         }

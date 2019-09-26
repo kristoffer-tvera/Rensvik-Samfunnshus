@@ -2,7 +2,7 @@
     'use strict';
     angular
         .module('umbraco')
-        .controller('BookingController', function ($scope, $http, assetsService) {
+        .controller('BookingController', function ($scope, $http) {
             $scope.title = 'Booking';
             $scope.bookings = [];
 
@@ -19,22 +19,16 @@
                         data.ApprovedDisplay = '❌';
                     }
 
-                    if (data.Wash === true) {
-                        data.WashDisplay = '✔';
-                    } else {
-                        data.WashDisplay = '❌';
-                    }
-
                     try {
                         data.From = new Date(data.From).toISOString().substring(0, 10);
                     } catch (e) {
-                        console.log(e);
+                        //ignored
                     }
 
                     try {
                         data.To = new Date(data.To).toISOString().substring(0, 10);
                     } catch (e) {
-                        console.log(e);
+                        //ignored
                     }
 
                     $scope.bookings.push(data);
@@ -49,7 +43,6 @@
                     { alias: "Area", header: "Område" },
                     { alias: "From", header: "Fra" },
                     { alias: "To", header: "Til" },
-                    { alias: "WashDisplay", header: "Ønsker vask" },
                     { alias: "ApprovedDisplay", header: "Godkjent" }
                 ]
             };
@@ -70,9 +63,14 @@
             }
 
             function clickItem(item) {
+                OpenOverlay(item);
             }
 
             function selectItem(selectedItem, $index, $event) {
+                OpenOverlay(selectedItem);
+            }
+
+            function OpenOverlay(item) {
                 $scope.overlay = {
                     view: "/App_Plugins/Booking/overlay.html",
                     title: "Booking",
@@ -97,7 +95,7 @@
                         $scope.overlay.show = false;
                         $scope.overlay = null;
                     },
-                    booking: angular.copy(selectedItem)
+                    booking: angular.copy(item)
                 };
             }
 
@@ -128,8 +126,6 @@
                         Comment: '',
                         Approved: false,
                         ApprovedDisplay: '❌',
-                        Wash: false,
-                        WashDisplay: '❌'
                     }
                 };
             };

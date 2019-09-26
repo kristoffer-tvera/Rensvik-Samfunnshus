@@ -18,7 +18,7 @@ namespace RSH.Hangfire
                     Cron.Daily(4), TimeZoneInfo.Utc); //04:00 UTC
 
                 RecurringJob.AddOrUpdate("SummaryEmail", () => SummaryEmail(),
-                    Cron.Weekly(), TimeZoneInfo.Utc); //Weekly
+                    Cron.Weekly(DayOfWeek.Monday, 6), TimeZoneInfo.Utc); //Weekly
             }
             catch (Exception ex)
             {
@@ -54,10 +54,14 @@ namespace RSH.Hangfire
 
             if (nextWeekBookings.Any())
             {
-                emailBody += nextWeekBookings.Select(booking =>
-               $"Navn: {booking.Name}\r\n" +
-               $"Dato: {booking.From} - {booking.To} \r\n" +
-               $"Melding: {booking.Comment}\r\n\r\n");
+                foreach (var booking in nextWeekBookings)
+                {
+                    var str = $"Navn: {booking.Name}\r\n" +
+                              $"Dato: {booking.From.ToString("dd.MM")}" + (booking.From == booking.To ? "\r\n" : $" - {booking.To.ToString("dd.MM")} \r\n") +
+                              $"Melding: {booking.Comment}\r\n\r\n";
+                    emailBody += str;
+                }
+
             }
             else
             {

@@ -10,9 +10,8 @@ namespace RSH.Models
         [DisplayName("Fra")]
         public DateTime From { get; set; }
 
-        [Required]
         [DisplayName("Til")]
-        public DateTime To { get; set; }
+        public DateTime? To { get; set; }
 
         [Required]
         [DisplayName("Område")]
@@ -27,8 +26,5 @@ namespace RSH.Models
 
         [DisplayName("Comment")]
         public string Comment { get; set; } = "";
-
-        [DisplayName("Wash")]
-        public bool Wash { get; set; }
     }
 }
