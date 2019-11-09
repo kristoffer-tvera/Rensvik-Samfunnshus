@@ -13,11 +13,9 @@
                 for (var i = 0; i < response.data.length; i++) {
                     var data = response.data[i];
 
-                    if (data.Approved === true) {
-                        data.ApprovedDisplay = '✔';
-                    } else {
-                        data.ApprovedDisplay = '❌';
-                    }
+                    data.ReservedDisplay = data.Reserved ? '✔' : '❌';
+
+                    data.ConfirmedDisplay = data.Confirmed ? '✔' : '❌';
 
                     try {
                         data.From = new Date(data.From).toISOString().substring(0, 10);
@@ -31,6 +29,8 @@
                         //ignored
                     }
 
+                    data.Dato = NiceTimeSpan(data.From, data.To);
+
                     $scope.bookings.push(data);
                 }
 
@@ -41,9 +41,9 @@
                 includeProperties: [
                     { alias: "Telephone", header: "Telefon" },
                     { alias: "Area", header: "Område" },
-                    { alias: "From", header: "Fra" },
-                    { alias: "To", header: "Til" },
-                    { alias: "ApprovedDisplay", header: "Godkjent" }
+                    { alias: "Dato", header: "Dato" },
+                    { alias: "ReservedDisplay", header: "Reservert" },
+                    { alias: "ConfirmedDisplay", header: "Bekreftet" }
                 ]
             };
 
@@ -82,6 +82,9 @@
 
                             for (var i = 0; i < $scope.bookings.length; i++) {
                                 if ($scope.bookings[i].Id === model.booking.Id) {
+
+                                    model.booking.Dato = NiceTimeSpan(model.booking.From, model.booking.To);
+
                                     $scope.bookings[i] = model.booking;
                                     break;
                                 }
@@ -99,41 +102,18 @@
                 };
             }
 
-            $scope.newItem = function () {
-                $scope.overlay = {
-                    view: "/App_Plugins/Booking/overlay.html",
-                    title: "Booking",
-                    show: true,
-                    hideSubmitButton: false,
-                    submit: function (model) {
-
-                        $http.post(url + 'New', model.booking).then(function (response) {
-                            $scope.bookings.push(model.booking);
-                        });
-
-                        $scope.overlay.show = false;
-                        $scope.overlay = null;
-                    },
-                    close: function (oldModel) {
-                        // do close magic here
-                        $scope.overlay.show = false;
-                        $scope.overlay = null;
-                    },
-                    booking: {
-                        name: '',
-                        Area: '',
-                        Telefon: '',
-                        Comment: '',
-                        Approved: false,
-                        ApprovedDisplay: '❌',
-                    }
-                };
-            };
-
             function isSortDirection(col, direction) {
             }
 
             function sort(field, allow, isSystem) {
+            }
+
+            function NiceTimeSpan(start, end) {
+                if (start === end) {
+                    return start;
+                } else {
+                    return start + ' - ' + end;
+                }
             }
 
         });

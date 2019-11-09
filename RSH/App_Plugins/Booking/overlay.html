@@ -29,8 +29,14 @@
         <hr />
 
         <label class="overlay__label">
-            <input type="checkbox" ng-model="model.booking.Approved" ng-change="UpdateApproved()" />
-            <span>Godtatt</span>
+            <input type="checkbox" ng-model="model.booking.Reserved" ng-change="UpdateReserved()" />
+            <span>Reservert</span>
+        </label>
+        <hr />
+
+        <label class="overlay__label">
+            <input type="checkbox" ng-model="model.booking.Confirmed" ng-change="UpdateConfirmed()" />
+            <span>Bekreftet (betalt)</span>
         </label>
         <hr />
 

@@ -5,19 +5,19 @@
         .module('umbraco')
         .controller('BookingOverlayController', function ($scope) {
 
-            $scope.UpdateApproved = function () {
-                if ($scope.model.booking.Approved === true) {
-                    $scope.model.booking.ApprovedDisplay = '✔';
+            $scope.UpdateReserved = function () {
+                if ($scope.model.booking.Reserved === true) {
+                    $scope.model.booking.ReservedDisplay = '✔';
                 } else {
-                    $scope.model.booking.ApprovedDisplay = '❌';
+                    $scope.model.booking.ReservedDisplay = '❌';
                 }
             };
 
-            $scope.UpdateWash = function () {
-                if ($scope.model.booking.Wash === true) {
-                    $scope.model.booking.WashDisplay = '✔';
+            $scope.UpdateConfirmed = function () {
+                if ($scope.model.booking.Confirmed === true) {
+                    $scope.model.booking.ConfirmedDisplay = '✔';
                 } else {
-                    $scope.model.booking.WashDisplay = '❌';
+                    $scope.model.booking.ConfirmedDisplay = '❌';
                 }
             };
 
