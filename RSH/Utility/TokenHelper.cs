@@ -22,9 +22,9 @@ namespace RSH.Utility
 
             var sql = new Sql()
                .Select("*")
+               .From<Token>(dbContext.SqlSyntax)
                .Where<Token>(t => t.Key == key, dbContext.SqlSyntax)
-               .Where<Token>(t => t.BookingId == bookingId, dbContext.SqlSyntax)
-               .From<Token>(dbContext.SqlSyntax);
+               .Where<Token>(t => t.BookingId == bookingId, dbContext.SqlSyntax);
 
             var token = db.FirstOrDefault<Token>(sql);
             if (token == null) return false;
