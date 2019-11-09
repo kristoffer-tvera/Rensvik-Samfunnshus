@@ -1,4 +1,5 @@
-﻿using RSH.Models;
+﻿using Hangfire;
+using RSH.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,25 @@ namespace RSH.Utility
 
             return bookings.FindAll(element => element.To >= DateTime.UtcNow.AddMonths(-2))
                 .OrderByDescending(b => b.From);
+        }
+
+        public static Booking Get(int id)
+        {
+            if (MemoryCache.Default.Get("bookings") is List<Booking> bookings)
+            {
+                return bookings.FirstOrDefault(b => b.Id == id);
+            }
+
+            var dbContext = ApplicationContext.Current.DatabaseContext;
+            var db = dbContext.Database;
+            var sql = new Sql()
+                .Select("*")
+                .From<Booking>(dbContext.SqlSyntax);
+            bookings = db.Fetch<Booking>(sql);
+
+            MemoryCache.Default.Add("bookings", bookings, DateTimeOffset.UtcNow.AddDays(7));
+
+            return bookings.FirstOrDefault(b => b.Id == id);
         }
 
         public static IEnumerable<Booking> GetOld()
@@ -72,7 +92,11 @@ namespace RSH.Utility
             booking.Requested = DateTime.UtcNow;
 
             db.Insert(booking);
+
+            BackgroundJob.Enqueue(() => Hangfire.Manager.NewBooking(booking.Id));
+
             MemoryCache.Default.Remove("bookings");
         }
+
     }
 }
