@@ -447,3 +447,10 @@ MigrationBackup/
 **/App_Data/Models/ood.flag
 
 # End of https://www.gitignore.io/api/rider,umbraco,visualstudio
+RSH/.idea/config/applicationhost.config
+RSH/.idea/.idea.RSH/riderModule.iml
+RSH/.idea/.idea.RSH/.idea/workspace.xml
+RSH/.idea/.idea.RSH/.idea/vcs.xml
+RSH/.idea/.idea.RSH/.idea/modules.xml
+RSH/.idea/.idea.RSH/.idea/indexLayout.xml
+RSH/.idea/.idea.RSH/.idea/contentModel.xml
