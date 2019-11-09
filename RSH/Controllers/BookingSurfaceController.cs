@@ -46,5 +46,21 @@ namespace RSH.Controllers
             return RedirectToUmbracoPage(nodeId);
         }
 
+        [HttpGet]
+        public string Reserver([Bind(Prefix = "t")]string token, int id)
+        {
+            if (TokenHelper.Validate(token, id))
+            {
+                var booking = BookingHelper.Get(id);
+                if (booking != null)
+                {
+                    booking.Reserved = true;
+                    BookingHelper.Save(booking);
+                }
+            }
+
+            return "Bookingen har blitt markert som \"Reservert\"";
+        }
+
     }
 }
