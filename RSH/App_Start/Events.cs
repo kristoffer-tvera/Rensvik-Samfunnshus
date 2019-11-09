@@ -15,6 +15,11 @@ namespace RSH.App_Start
             {
                 db.CreateTable<Booking>();
             }
+
+            if (!db.TableExist<Token>())
+            {
+                db.CreateTable<Token>();
+            }
         }
     }
 }
