@@ -100,6 +100,8 @@ namespace RSH.Hangfire
             if (booking == null) return "No valid booking registered";
 
             var emailRecipients = Settings.NewBookingEmailRecipients;
+            if (string.IsNullOrWhiteSpace(emailRecipients)) return "Aborting early, no recipients configred";
+
             var emailRecipientsList = emailRecipients.Split(',');
             var mailMessage = new MailMessage();
 
