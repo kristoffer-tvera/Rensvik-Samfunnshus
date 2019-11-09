@@ -8,6 +8,7 @@ namespace RSH.Utility
     {
         public static string UmbracoVersion => Setting<string>("umbracoConfigurationStatus");
         public static string SummaryEmailRecipients => Setting<string>("SummaryEmailRecipients");
+        public static int MaxBookingLength => Setting<int>("MaxBookingLength");
 
         private static T Setting<T>(string name)
         {
