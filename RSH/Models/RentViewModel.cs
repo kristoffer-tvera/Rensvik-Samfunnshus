@@ -14,7 +14,7 @@ namespace RSH.Models
         {
         }
 
-        public IEnumerable<DateTime> CurrentBookings { get; set; }
+        public IEnumerable<Tuple<DateTime, bool>> CurrentBookings { get; set; }
         public string ModalTitle { get; set; }
         public string ModalBody { get; set; }
 

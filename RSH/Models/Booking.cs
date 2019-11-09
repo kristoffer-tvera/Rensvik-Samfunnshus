@@ -39,11 +39,10 @@ namespace RSH.Models
         [SpecialDbType(SpecialDbTypes.NTEXT)]
         public string Comment { get; set; } = "";
 
-        [Column("Approved")]
-        public bool Approved { get; set; }
-
-        [Column("Payment")]
-        [NullSetting(NullSetting = NullSettings.Null)]
-        public DateTime? Payment { get; set; }
+        [Column("Reserved")]
+        public bool Reserved { get; set; }
+        
+        [Column("Confirmed")]
+        public bool Confirmed { get; set; }
     }
 }

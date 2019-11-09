@@ -1,5 +1,6 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<RSH.Models.RentViewModel>
 @using System.Globalization;
+@using RSH.Models
 @{
     Layout = "Master.cshtml";
     var modalTitle = TempData["ModalTitle"] as string;
@@ -7,7 +8,7 @@
 }
 
 @section style {
-    <link href="~/Content/flatpickr/datepicker.css" rel="stylesheet" />
+    <link href="~/Content/flatpickr/datepicker.css" rel="stylesheet"/>
 }
 
 @Html.GetGridHtml(Model.Content, "grid", "Bootstrap4")
@@ -17,7 +18,7 @@
     @using (Html.BeginUmbracoForm("Submit", "BookingSurface"))
     {
         @Html.AntiForgeryToken()
-        <input type="hidden" name="nodeId" value="@Model.Content.Id" />
+        <input type="hidden" name="nodeId" value="@Model.Content.Id"/>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="inputName">Navn</label>
@@ -98,21 +99,21 @@
     <script src="~/Content/flatpickr/datepicker.js"></script>
     <script type="text/javascript">
 
-        @if(!string.IsNullOrWhiteSpace(modalTitle) && !string.IsNullOrWhiteSpace(modalBody))
-            {
-                <text>$('#bookingmodal').modal('show');</text>
-            }
+        @if (!string.IsNullOrWhiteSpace(modalTitle) && !string.IsNullOrWhiteSpace(modalBody))
+        {
+            <text>$('#bookingmodal').modal('show');</text>
+        }
     </script>
 }
 
-@helper RenderMonth(int year, int month, IEnumerable<DateTime> booked)
+@helper RenderMonth(int year, int month, IEnumerable<Tuple<DateTime, bool>> bookings)
 {
     <div class="row pt-5">
         @{
             var date = new DateTime(year, month, 1);
         }
         <h2 class="col-12 text-capitalize text-center">@(date.ToString("MMMM", CultureInfo.CreateSpecificCulture("no")))</h2>
-        <hr class="col-12" />
+        <hr class="col-12"/>
         <div class="col-12">
             <div class="row">
                 <p class="col text-center">M<span class="d-none d-md-inline">andag</span></p>
@@ -135,9 +136,17 @@
                     {
                         <span class="col-12"></span>
                     }
-                    if (booked.Contains(date))
+                    if (bookings.Any(x => x.Item1.Equals(date)))
                     {
-                        <p class="col p-1 m-1 text-center busy">@i</p>
+                        var booking = bookings.FirstOrDefault(x => x.Item1.Equals(date));
+                        if (booking == null)
+                        {
+                            continue;
+                        }
+
+                        var css = booking.Item2 ? "confirmed" : "reserved";
+
+                        <p class="col p-1 m-1 text-center @css">@i</p>
                     }
                     else
                     {
@@ -146,7 +155,7 @@
                     date = date.AddDays(1);
                 }
 
-                @for (var i = 0; i < 7 - (int)date.AddDays(-1).DayOfWeek; i++)
+                @for (var i = 0; i < 7 - (int) date.AddDays(-1).DayOfWeek; i++)
                 {
                     <p class="col p-1 m-1 text-center"></p>
                 }
@@ -156,6 +165,7 @@
 }
 
 @functions{
+
     private static int WeekDayNumber(DayOfWeek dayOfWeek)
     {
         switch (dayOfWeek)
@@ -178,4 +188,5 @@
                 return 0;
         }
     }
+
 }

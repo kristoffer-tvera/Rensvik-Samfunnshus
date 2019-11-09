@@ -1,6 +1,7 @@
 ﻿using RSH.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Caching;
 using Umbraco.Core;
 using Umbraco.Core.Persistence;
@@ -11,10 +12,13 @@ namespace RSH.Utility
     {
         public static IEnumerable<Booking> Get()
         {
-            if(MemoryCache.Default.Get("bookings") is List<Booking> bookings)
+            if (MemoryCache.Default.Get("bookings") is List<Booking> bookings)
             {
-                return bookings.FindAll(element => element.To >= DateTime.UtcNow.AddMonths(-2));
+                return bookings
+                    .FindAll(element => element.To >= DateTime.UtcNow.AddMonths(-2))
+                    .OrderByDescending(b => b.From);
             }
+
 
             var dbContext = ApplicationContext.Current.DatabaseContext;
             var db = dbContext.Database;
@@ -25,14 +29,16 @@ namespace RSH.Utility
 
             MemoryCache.Default.Add("bookings", bookings, DateTimeOffset.UtcNow.AddDays(7));
 
-            return bookings.FindAll(element => element.To >= DateTime.UtcNow.AddMonths(-2));
+            return bookings.FindAll(element => element.To >= DateTime.UtcNow.AddMonths(-2))
+                .OrderByDescending(b => b.From);
         }
 
         public static IEnumerable<Booking> GetOld()
         {
             if (MemoryCache.Default.Get("bookings") is List<Booking> bookings)
             {
-                return bookings.FindAll(element => element.To <= DateTime.UtcNow.AddMonths(-2));
+                return bookings.FindAll(element => element.To <= DateTime.UtcNow.AddMonths(-2))
+                    .OrderByDescending(b => b.From);
             }
 
             var dbContext = ApplicationContext.Current.DatabaseContext;
@@ -45,7 +51,8 @@ namespace RSH.Utility
 
             MemoryCache.Default.Add("bookings", bookings, DateTimeOffset.UtcNow.AddDays(7));
 
-            return bookings.FindAll(element => element.To <= DateTime.UtcNow.AddMonths(-2));
+            return bookings.FindAll(element => element.To <= DateTime.UtcNow.AddMonths(-2))
+                .OrderByDescending(b => b.From);
         }
 
         public static void Save(Booking booking)
