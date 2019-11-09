@@ -454,3 +454,6 @@ RSH/.idea/.idea.RSH/.idea/vcs.xml
 RSH/.idea/.idea.RSH/.idea/modules.xml
 RSH/.idea/.idea.RSH/.idea/indexLayout.xml
 RSH/.idea/.idea.RSH/.idea/contentModel.xml
+RSH/Web.Release.config
+RSH/Web.Debug.config
+RSH/Web.config
