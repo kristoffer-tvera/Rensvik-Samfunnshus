@@ -52,4 +52,5 @@ function toggleTilDato() {
 function setDate(year, month, day) {
     var date = new Date(year, month, day);
     fraDato.setDate(date);
+    tilDato.clear();
 }

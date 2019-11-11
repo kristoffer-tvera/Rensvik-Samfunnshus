@@ -5,12 +5,15 @@ body {
   min-height: 100%; }
 
 .banner--big {
-  height: 650px;
+  height: 450px;
   object-fit: cover;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center; }
+  @media screen and (min-width: 992px) {
+    .banner--big {
+      height: 650px; } }
   .banner--big > h1 {
     margin: 0;
     padding: 1rem 2rem;
@@ -18,12 +21,15 @@ body {
     text-align: center; }
 
 .banner--small {
-  height: 450px;
+  height: 250px;
   object-fit: cover;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center; }
+  @media screen and (min-width: 992px) {
+    .banner--small {
+      height: 450px; } }
   .banner--small > h1 {
     margin: 0;
     padding: 1rem 2rem;
