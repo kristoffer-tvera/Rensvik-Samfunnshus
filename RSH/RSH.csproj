@@ -311,6 +311,7 @@
     </Content>
     <Content Include="css\rte.css" />
     <Content Include="default.aspx" />
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>

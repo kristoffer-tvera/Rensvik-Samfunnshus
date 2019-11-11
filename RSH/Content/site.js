@@ -1,6 +1,7 @@
 ﻿var tilDato, fraDato;
 
 function autorun() {
+    if (typeof (flatpickr) === 'undefined') return;
 
     tilDato = flatpickr("#tilDato", {
         dateFormat: 'Y-m-d',
