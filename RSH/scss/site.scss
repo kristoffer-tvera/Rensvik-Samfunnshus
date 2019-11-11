@@ -1,65 +1,69 @@
 ﻿html {
-  height: 100%;
+    height: 100%;
 }
 
 body {
-  min-height: 100%;
+    min-height: 100%;
 }
 
 .banner {
-  &--big {
-    height: 650px;
-    object-fit: cover;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    &--big {
+        height: 650px;
+        object-fit: cover;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
 
-    & > h1 {
-      margin: 0;
-      padding: 1rem 2rem;
-      background-color: rgba(255, 255, 255, 0.5);
-      text-align: center;
+        & > h1 {
+            margin: 0;
+            padding: 1rem 2rem;
+            background-color: rgba(255, 255, 255, 0.5);
+            text-align: center;
+        }
     }
-  }
 
-  &--small {
-    height: 450px;
-    object-fit: cover;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    &--small {
+        height: 450px;
+        object-fit: cover;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
 
-    & > h1 {
-      margin: 0;
-      padding: 1rem 2rem;
-      background-color: rgba(255, 255, 255, 0.5);
-      text-align: center;
+        & > h1 {
+            margin: 0;
+            padding: 1rem 2rem;
+            background-color: rgba(255, 255, 255, 0.5);
+            text-align: center;
+        }
     }
-  }
 }
 
 .ws {
-  &--pre-wrap {
-    white-space: pre-wrap;
-  }
+    &--pre-wrap {
+        white-space: pre-wrap;
+    }
 }
 
 .busy {
-  color: #fff;
-  background-color: #f00;
-  cursor: not-allowed;
+    color: #fff;
+    background-color: #f00;
+    cursor: not-allowed;
 }
 
 .confirmed {
-  color: #fff;
-  background-color: #f00;
-  cursor: not-allowed;
+    color: #fff;
+    background-color: #ff0000;
+    cursor: not-allowed;
 }
 
 .reserved {
-  color: #fff;
-  background-color: #f00;
-  cursor: not-allowed;
+    color: #fff;
+    background-color: #ffa500;
+    cursor: not-allowed;
+}
+
+.clickable {
+    cursor: pointer;
 }

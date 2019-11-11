@@ -376,6 +376,7 @@
     <Content Include="Views\Partials\Banner\_bannerSmall.cshtml" />
     <Content Include="Views\Gallery.cshtml" />
     <Content Include="Views\Rent.cshtml" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Partials\Banner\_bannerBig.cshtml" />
     <Content Include="Views\Partials\Grid\Editors\Textstring.cshtml" />
@@ -387,6 +388,9 @@
     <Content Include="Views\Partials\Grid\Bootstrap3-Fluid.cshtml" />
     <Content Include="Views\Partials\Grid\Bootstrap2.cshtml" />
     <Content Include="Views\Partials\Grid\Bootstrap2-Fluid.cshtml" />
+    <None Include="Properties\PublishProfiles\rensviksamfunnshus - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\rensviksamfunnshus - ReadOnly - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\rensviksamfunnshus - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

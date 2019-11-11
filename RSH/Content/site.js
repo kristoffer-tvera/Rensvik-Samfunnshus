@@ -1,14 +1,16 @@
-﻿function autorun() {
+﻿var tilDato, fraDato;
 
-    var tilDato = flatpickr("#tilDato", {
-        dateFormat: 'Z',
+function autorun() {
+
+    tilDato = flatpickr("#tilDato", {
+        dateFormat: 'Y-m-d',
         altInput: true,
         altFormat: 'd-m-Y',
         minDate: "today",
     });
 
-    var fraDato = flatpickr("#fraDato", {
-        dateFormat: 'Z',
+    fraDato = flatpickr("#fraDato", {
+        dateFormat: 'Y-m-d',
         altInput: true,
         altFormat: 'd-m-Y',
         minDate: "today",
@@ -30,11 +32,14 @@ else window.onload = autorun;
 function toggleTilDato() {
     var wrapper = document.querySelector('#tilDatoWrapper');
     var input = wrapper.querySelector('input[type="text"]');
+    var hidden = wrapper.querySelector('input[type="hidden"]');
 
     var notRequired;
     if (wrapper && wrapper.classList) {
         notRequired = wrapper.classList.toggle('d-none');
     }
+
+    hidden.disabled = notRequired;
 
     if (notRequired) {
         input.removeAttribute('required');
@@ -42,4 +47,9 @@ function toggleTilDato() {
         input.setAttribute('required', 'required');
     }
 
+}
+
+function setDate(year, month, day) {
+    var date = new Date(year, month, day);
+    fraDato.setDate(date);
 }
