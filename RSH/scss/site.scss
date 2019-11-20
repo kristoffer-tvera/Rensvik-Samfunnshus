@@ -79,3 +79,12 @@ body {
 hr {
     box-sizing: border-box;
 }
+
+.form-group {
+    &.required {
+        &:before {
+            content: '*';
+            color: red;
+        }
+    }
+}

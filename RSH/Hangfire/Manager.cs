@@ -114,7 +114,14 @@ namespace RSH.Hangfire
 
             var body = $"Navn: {booking.Name} \r\n";
             body += $"Telefon: {booking.Telephone} \r\n";
-            body += $"Dato: {booking.From:dd.MM} - {booking.To:dd.MM} \r\n";
+            if (booking.From == booking.To)
+            {
+                body += $"Dato: {booking.From:dd.MM} \r\n";
+            }
+            else
+            {
+                body += $"Dato: {booking.From:dd.MM} - {booking.To:dd.MM} \r\n";
+            }
             body += $"Kommentar: {booking.Comment} \r\n";
 
             body += $"Marker denne bookingen som reservert ved å klikke lenken nedenfor\r\n";
