@@ -34,6 +34,13 @@ namespace RSH.Models
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; } = "";
 
+        [Column("Address")]
+        public string Address { get; set; } = "";
+
+        [Column("Email")]
+        [NullSetting(NullSetting = NullSettings.Null)]
+        public string Email { get; set; } = "";
+
         [Column("Comment")]
         [NullSetting(NullSetting = NullSettings.Null)]
         [SpecialDbType(SpecialDbTypes.NTEXT)]

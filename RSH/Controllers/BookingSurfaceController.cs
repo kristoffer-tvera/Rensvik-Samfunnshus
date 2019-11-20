@@ -1,6 +1,7 @@
 ﻿using RSH.Models;
 using RSH.Utility;
 using System;
+using System.Runtime.Caching;
 using System.Web.Mvc;
 using Umbraco.Web.Mvc;
 
@@ -27,6 +28,8 @@ namespace RSH.Controllers
                 Area = submission.Area,
                 Telephone = submission.Telephone,
                 Name = submission.Name,
+                Address = submission.Address,
+                Email = submission.Email,
                 Comment = submission.Comment
             };
 
@@ -58,6 +61,7 @@ namespace RSH.Controllers
                     BookingHelper.Save(booking);
                 }
             }
+            MemoryCache.Default.Remove("bookings");
 
             return "Bookingen har blitt markert som \"Reservert\"";
         }
