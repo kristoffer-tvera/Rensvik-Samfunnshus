@@ -20,6 +20,16 @@ namespace RSH.App_Start
             {
                 db.CreateTable<Token>();
             }
+
+            if (!db.TableExist<SummaryEmail>())
+            {
+                db.CreateTable<SummaryEmail>();
+            }
+
+            if (!db.TableExist<NewBookingEmail>())
+            {
+                db.CreateTable<NewBookingEmail>();
+            }
         }
     }
 }

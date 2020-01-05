@@ -275,6 +275,8 @@
     <Content Include="App_Plugins\Booking\old.html" />
     <Content Include="App_Plugins\Booking\overlay.controller.js" />
     <Content Include="App_Plugins\Booking\overlay.html" />
+    <Content Include="App_Plugins\Booking\settings.html" />
+    <Content Include="App_Plugins\Booking\settings.js" />
     <Content Include="App_Plugins\Booking\style.css" />
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.controller.js" />
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.htm" />
@@ -326,7 +328,9 @@
     <Compile Include="Hangfire\Manager.cs" />
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\BookingFormSubmission.cs" />
+    <Compile Include="Models\NewBookingEmail.cs" />
     <Compile Include="Models\RentViewModel.cs" />
+    <Compile Include="Models\SummaryEmail.cs" />
     <Compile Include="Models\Token.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\BookingHelper.cs" />

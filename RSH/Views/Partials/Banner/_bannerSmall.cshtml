@@ -2,8 +2,6 @@
 @{
     var image = Model.GetPropertyValue<IPublishedContent>("image");
     var textString = Model.GetPropertyValue<string>("textstring");
-
-    var crop = image.GetCropUrl();
 }
 
 <section class="banner--small" id="banner">
@@ -19,24 +17,24 @@
         background-size: cover;
     }
     #banner {
-        background-image: url('@(image.Url)?width=800');
+        background-image: url('@(image?.Url)?width=800');
     }
 
     @@media screen and (min-width: 500px){
         #banner {
-            background-image: url('@(image.Url)?width=1200');
+            background-image: url('@(image?.Url)?width=1200');
         }
     }
 
     @@media screen and (min-width: 1000px){
         #banner {
-            background-image: url('@(image.Url)?width=1600');
+            background-image: url('@(image?.Url)?width=1600');
         }
     }
 
     @@media screen and (min-width: 1500px){
         #banner {
-            background-image: url('@(image.Url)');
+            background-image: url('@(image?.Url)');
         }
     }
 </style>

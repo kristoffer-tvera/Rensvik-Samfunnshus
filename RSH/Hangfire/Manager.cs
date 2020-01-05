@@ -33,6 +33,8 @@ namespace RSH.Hangfire
             if (string.IsNullOrWhiteSpace(summaryEmailRecipients))
                 return "Invalid settings, \"SummaryEmailRecipients\"";
 
+            var _summaryEmailRecipients = EmailHelper.GetSummaryEmails();
+
             var emails = summaryEmailRecipients.Split(',');
 
             var bookings = BookingHelper.Get();
