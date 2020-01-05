@@ -78,7 +78,7 @@ namespace RSH.Hangfire
                 }
             }
 
-            return $"Sent {sentEmails} emails, to following list of recipients: {summaryEmailRecipients}";
+            return $"Sent {sentEmails} emails, to following list of recipients: {string.Join(", ", emails)}";
         }
 
         [Queue("default")]
