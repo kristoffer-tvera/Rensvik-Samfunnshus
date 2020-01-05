@@ -334,6 +334,7 @@
     <Compile Include="Models\Token.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\BookingHelper.cs" />
+    <Compile Include="Utility\EmailHelper.cs" />
     <Compile Include="Utility\LogHelper.cs" />
     <Compile Include="Utility\RandomHelper.cs" />
     <Compile Include="Utility\Settings.cs" />

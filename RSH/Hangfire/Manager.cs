@@ -6,7 +6,6 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Mail;
 using System.Reflection;
-using System.Security.Cryptography;
 
 namespace RSH.Hangfire
 {
@@ -29,13 +28,9 @@ namespace RSH.Hangfire
         [AutomaticRetry(Attempts = 2)]
         public static string SummaryEmail()
         {
-            var summaryEmailRecipients = Settings.SummaryEmailRecipients;
-            if (string.IsNullOrWhiteSpace(summaryEmailRecipients))
-                return "Invalid settings, \"SummaryEmailRecipients\"";
-
-            var _summaryEmailRecipients = EmailHelper.GetSummaryEmails();
-
-            var emails = summaryEmailRecipients.Split(',');
+            var emails = EmailHelper.GetSummaryEmails();
+            if (emails == null || !emails.Any())
+                return "No summary email recipients";
 
             var bookings = BookingHelper.Get();
             var nextWeekBookings = bookings.Where(booking =>
@@ -101,10 +96,8 @@ namespace RSH.Hangfire
             var booking = BookingHelper.Get(id);
             if (booking == null) return "No valid booking registered";
 
-            var emailRecipients = Settings.NewBookingEmailRecipients;
-            if (string.IsNullOrWhiteSpace(emailRecipients)) return "Aborting early, no recipients configred";
+            var emailRecipientsList = EmailHelper.GetNewBookingEmails();
 
-            var emailRecipientsList = emailRecipients.Split(',');
             var mailMessage = new MailMessage();
 
             foreach (var emailRecipient in emailRecipientsList)
