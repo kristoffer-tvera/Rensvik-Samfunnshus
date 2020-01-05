@@ -1,0 +1,56 @@
+﻿<div ng-controller="SettingsController">
+    <h1>Weekly summary emails</h1>
+    <umb-table ng-if="summaryEmailsReady"
+               items="summaryEmails"
+               item-properties="options.includeProperties"
+               allow-select-all="allowSelectAll"
+               on-select="selectSummaryEmailItem"
+               on-click="clickItem"
+               on-select-all="selectAll"
+               on-selected-all="isSelectedAll"
+               on-sorting-direction="isSortDirection"
+               on-sort="sort">
+    </umb-table>
+    <p ng-if="!summaryEmailsReady"> Ingen eposter er lagt til </p>
+    <br />
+    <form ng-submit="AddSummaryEmail()">
+        <label>
+            Legg til en ny epost i listen
+            <br />
+            <input type="email" name="email" ng-model="SummaryEmail" />
+        </label>
+        <br />
+        <button type="submit">
+            Legg til
+        </button>
+    </form>
+    <hr />
+
+    <h1>New booking emails</h1>
+    <umb-table ng-if="newBookingEmailsReady"
+               items="newBookingEmails"
+               item-properties="options.includeProperties"
+               allow-select-all="allowSelectAll"
+               on-select="selectNewBookingEmailItem"
+               on-click="clickItem"
+               on-select-all="selectAll"
+               on-selected-all="isSelectedAll"
+               on-sorting-direction="isSortDirection"
+               on-sort="sort">
+    </umb-table>
+
+    <p ng-if="!newBookingEmailsReady"> Ingen eposter er lagt til </p>
+    <br />
+    <form ng-submit="AddNewBookingEmail()">
+        <label>
+            Legg til en ny epost i listen
+            <br />
+            <input type="email" name="email" ng-model="NewBookingEmail" />
+        </label>
+        <br />
+        <button type="submit">
+            Legg til
+        </button>
+    </form>
+    <hr />
+</div>
