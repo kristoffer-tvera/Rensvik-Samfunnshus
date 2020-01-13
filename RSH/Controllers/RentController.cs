@@ -41,7 +41,7 @@ namespace RSH.Controllers
                         safeguard++;
                     }
 
-                    if (safeguard > Settings.MaxBookingLength)
+                    if (safeguard <= Settings.MaxBookingLength)
                     {
                         dateList.AddRange(tempDateList);
                     }
