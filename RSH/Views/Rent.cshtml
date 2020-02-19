@@ -46,6 +46,7 @@
                 <option>Lille sal</option>
                 <option>Store sal</option>
                 <option>Begge</option>
+                <option>Bord/Stoler eller servise</option>
             </select>
         </div>
         <div class="form-group">
@@ -83,6 +84,9 @@
     @RenderMonth(DateTime.Now.AddMonths(1).Year, DateTime.Now.AddMonths(1).Month, Model.CurrentBookings)
     @RenderMonth(DateTime.Now.AddMonths(2).Year, DateTime.Now.AddMonths(2).Month, Model.CurrentBookings)
     @RenderMonth(DateTime.Now.AddMonths(3).Year, DateTime.Now.AddMonths(3).Month, Model.CurrentBookings)
+    @RenderMonth(DateTime.Now.AddMonths(4).Year, DateTime.Now.AddMonths(4).Month, Model.CurrentBookings)
+    @RenderMonth(DateTime.Now.AddMonths(5).Year, DateTime.Now.AddMonths(5).Month, Model.CurrentBookings)
+    @RenderMonth(DateTime.Now.AddMonths(6).Year, DateTime.Now.AddMonths(6).Month, Model.CurrentBookings)
 
 </section>
 

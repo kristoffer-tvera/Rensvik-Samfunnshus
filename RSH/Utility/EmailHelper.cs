@@ -3,6 +3,8 @@ using System.Linq;
 using Umbraco.Core;
 using Umbraco.Core.Persistence;
 using RSH.Models;
+using System.Configuration;
+using System.Net.Configuration;
 
 namespace RSH.Utility
 {
@@ -35,6 +37,13 @@ namespace RSH.Utility
             var emails = db.Fetch<NewBookingEmail>(sql);
 
             return emails.Select(x => x.Email);
+        }
+        
+        public static string GetSmtpUsername()
+        {
+            var smtpSection = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
+            string username = smtpSection.Network.UserName;
+            return username;
         }
     }
 }

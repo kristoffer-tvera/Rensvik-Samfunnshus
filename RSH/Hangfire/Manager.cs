@@ -45,12 +45,13 @@ namespace RSH.Hangfire
 
             if (nextWeekBookings.Any())
             {
-                foreach (var booking in nextWeekBookings)
+                foreach (var booking in nextWeekBookings.OrderBy(b => b.From))
                 {
                     var str = $"Navn: {booking.Name}\r\n" +
                               $"Dato: {booking.From:dd.MM}" + (booking.From == booking.To
                                   ? "\r\n"
                                   : $" - {booking.To:dd.MM} \r\n") +
+                              $"Område - {booking.Area} \r\n" +
                               $"Melding: {booking.Comment}\r\n\r\n";
                     emailBody += str;
                 }
@@ -69,7 +70,8 @@ namespace RSH.Hangfire
                     {
                         Subject = $"Rensvik Samfunnshus, uke {weekNumber}",
                         Body = emailBody,
-                        BodyEncoding = System.Text.Encoding.UTF8
+                        BodyEncoding = System.Text.Encoding.UTF8,
+                        From = new MailAddress(EmailHelper.GetSmtpUsername(), "Rensvik Samfunnshus")
                     };
                     mailMessage.To.Add(recipient);
 
@@ -99,6 +101,7 @@ namespace RSH.Hangfire
             var emailRecipientsList = EmailHelper.GetNewBookingEmails();
 
             var mailMessage = new MailMessage();
+            mailMessage.From = new MailAddress(EmailHelper.GetSmtpUsername(), "Rensvik Samfunnshus");
 
             foreach (var emailRecipient in emailRecipientsList)
             {
@@ -109,6 +112,7 @@ namespace RSH.Hangfire
 
             var body = $"Navn: {booking.Name} \r\n";
             body += $"Telefon: {booking.Telephone} \r\n";
+            body += $"Område: {booking.Area} \r\n";
             if (booking.From == booking.To)
             {
                 body += $"Dato: {booking.From:dd.MM} \r\n";
