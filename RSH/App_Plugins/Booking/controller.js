@@ -10,30 +10,32 @@
 
             $http.get(url + 'Load').then(function (response) {
 
-                for (var i = 0; i < response.data.length; i++) {
-                    var data = response.data[i];
+                if (response.data) {
+                    for (var i = 0; i < response.data.length; i++) {
+                        var data = response.data[i];
 
-                    data.ReservedDisplay = data.Reserved ? '✔' : '❌';
+                        data.ReservedDisplay = data.Reserved ? '✔' : '❌';
 
-                    data.ConfirmedDisplay = data.Confirmed ? '✔' : '❌';
+                        data.ConfirmedDisplay = data.Confirmed ? '✔' : '❌';
 
-                    try {
-                        data.From = new Date(data.From).toISOString().substring(0, 10);
-                    } catch (e) {
-                        //ignored
+                        try {
+                            data.From = new Date(data.From).toISOString().substring(0, 10);
+                        } catch (e) {
+                            //ignored
+                        }
+
+                        try {
+                            data.To = new Date(data.To).toISOString().substring(0, 10);
+                        } catch (e) {
+                            //ignored
+                        }
+
+                        data.Dato = NiceTimeSpan(data.From, data.To);
+
+                        $scope.bookings.push(data);
                     }
-
-                    try {
-                        data.To = new Date(data.To).toISOString().substring(0, 10);
-                    } catch (e) {
-                        //ignored
-                    }
-
-                    data.Dato = NiceTimeSpan(data.From, data.To);
-
-                    $scope.bookings.push(data);
                 }
-
+                
                 $scope.ready = true;
             });
 

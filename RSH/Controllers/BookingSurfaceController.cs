@@ -26,11 +26,13 @@ namespace RSH.Controllers
                 From = submission.From,
                 To = submission.To ?? submission.From,
                 Area = submission.Area,
-                Telephone = submission.Telephone,
-                Name = submission.Name,
-                Address = submission.Address,
-                Email = submission.Email,
-                Comment = submission.Comment
+                Telephone = submission.Telephone.Substring(0, Math.Min(254, submission.Telephone.Length)),
+                Name = submission.Name.Substring(0, Math.Min(254, submission.Name.Length)),
+                Address = submission.Address.Substring(0, Math.Min(254, submission.Address.Length)),
+                Email = submission.Email.Substring(0, Math.Min(254, submission.Email.Length)),
+                Comment = submission.Comment,
+                TimeOfDay = submission.TimeOfDay.Substring(0, Math.Min(254, submission.TimeOfDay.Length)),
+                Purpose = submission.Purpose.Substring(0, Math.Min(254, submission.Purpose.Length))
             };
 
             try

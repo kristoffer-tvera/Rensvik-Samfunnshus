@@ -36,6 +36,20 @@
         <hr />
 
         <label class="overlay__label">
+            <span>Tid</span>
+            <br />
+            <input type="text" ng-model="model.booking.TimeOfDay" class="overlay__input" />
+        </label>
+        <hr />
+
+        <label class="overlay__label">
+            <span>Formål</span>
+            <br />
+            <input type="text" ng-model="model.booking.Purpose" class="overlay__input" />
+        </label>
+        <hr />
+
+        <label class="overlay__label">
             <span>Kommentar</span>
             <br />
             <textarea ng-model="model.booking.Comment" class="overlay__input" rows="8">

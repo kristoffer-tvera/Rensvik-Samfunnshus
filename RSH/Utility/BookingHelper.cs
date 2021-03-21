@@ -31,7 +31,7 @@ namespace RSH.Utility
             MemoryCache.Default.Add("bookings", bookings, DateTimeOffset.UtcNow.AddDays(7));
 
             return bookings.FindAll(element => element.To >= DateTime.UtcNow.AddMonths(-2))
-                .OrderByDescending(b => b.From);
+                .OrderByDescending(b => b.From).ToList();
         }
 
         public static Booking Get(int id)

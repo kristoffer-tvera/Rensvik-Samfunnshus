@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="form-group required">
-            <label for="exampleFormControlSelect1">Ønsket område</label>
+            <label for="exampleFormControlSelect1">Ønskes leid</label>
             <select class="form-control" id="exampleFormControlSelect1" name="Area" required="required">
                 <option selected disabled>Velg en</option>
                 <option>Lille sal</option>
@@ -48,6 +48,18 @@
                 <option>Begge</option>
                 <option>Bord/Stoler eller servise</option>
             </select>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-12 required">
+                <label for="inputTelephone">Tid på dagen (f.eks: morgen, kveld, 18-20)</label>
+                <input type="tel" class="form-control" id="inputTimeOfDay" placeholder="f.eks: morgen, kveld, 18-20" name="TimeOfDay" required="required">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-12 required">
+                <label for="inputTelephone">Formål (f.eks konfirmasjon, fast utleie, møte)</label>
+                <input type="tel" class="form-control" id="inputPurpose" placeholder="f.eks konfirmasjon, fast utleie, møte" name="Purpose" required="required">
+            </div>
         </div>
         <div class="form-group">
             <label for="exampleFormControlTextarea1">Kommentar/ønsker</label>
@@ -79,6 +91,11 @@
 </section>
 
 <section class="container my-3 py-3">
+    <div>
+        <h3>Fargekoder:</h3>
+        <p> En <span class="reserved"> orange </span> dato i kalenderen indikerer at vi kanskje har en utleie denne dagen.</p>
+        <p> En <span class="confirmed"> rød </span> dato i kalenderen indikerer at vi har en bekreftet utleie denne dagen.</p>
+    </div>
 
     @RenderMonth(DateTime.Now.Year, DateTime.Now.Month, Model.CurrentBookings)
     @RenderMonth(DateTime.Now.AddMonths(1).Year, DateTime.Now.AddMonths(1).Month, Model.CurrentBookings)

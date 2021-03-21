@@ -51,5 +51,13 @@ namespace RSH.Models
         
         [Column("Confirmed")]
         public bool Confirmed { get; set; }
+
+        [Column("TimeOfDay")]
+        [NullSetting(NullSetting = NullSettings.Null)]
+        public string TimeOfDay { get; set; } = "";
+
+        [Column("Purpose")]
+        [NullSetting(NullSetting = NullSettings.Null)]
+        public string Purpose { get; set; } = "";
     }
 }

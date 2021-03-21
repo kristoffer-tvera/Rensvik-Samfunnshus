@@ -121,6 +121,9 @@ namespace RSH.Hangfire
             {
                 body += $"Dato: {booking.From:dd.MM} - {booking.To:dd.MM} \r\n";
             }
+
+            body += $"Tid: {booking.TimeOfDay} \r\n";
+            body += $"Formål: {booking.Purpose} \r\n";
             body += $"Kommentar: {booking.Comment} \r\n";
 
             body += $"Marker denne bookingen som reservert ved å klikke lenken nedenfor\r\n";

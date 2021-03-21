@@ -33,5 +33,11 @@ namespace RSH.Models
 
         [DisplayName("Comment")]
         public string Comment { get; set; } = "";
+
+        [DisplayName("TimeOfDay")]
+        public string TimeOfDay { get; set; } = "";
+
+        [DisplayName("Purpose")]
+        public string Purpose { get; set; } = "";
     }
 }
