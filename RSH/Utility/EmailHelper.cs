@@ -42,7 +42,7 @@ namespace RSH.Utility
         public static string GetSmtpUsername()
         {
             var smtpSection = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
-            string username = smtpSection.Network.UserName;
+            string username = smtpSection.From;
             return username;
         }
     }
