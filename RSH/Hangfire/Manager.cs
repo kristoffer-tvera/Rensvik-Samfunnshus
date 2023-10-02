@@ -48,6 +48,7 @@ namespace RSH.Hangfire
                 foreach (var booking in nextWeekBookings.OrderBy(b => b.From))
                 {
                     var str = $"Navn: {booking.Name}\r\n" +
+                              $"Telefon: - {booking.Telephone} \r\n" +
                               $"Dato: {booking.From:dd.MM}" + (booking.From == booking.To
                                   ? "\r\n"
                                   : $" - {booking.To:dd.MM} \r\n") +
