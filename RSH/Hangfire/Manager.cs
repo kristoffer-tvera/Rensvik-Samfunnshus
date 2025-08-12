@@ -1,11 +1,14 @@
 ﻿using Hangfire;
+using MailKit.Net.Smtp;
+using MailKit.Security;
+using MimeKit;
 using RSH.Models;
 using RSH.Utility;
 using System;
 using System.Globalization;
 using System.Linq;
-using System.Net.Mail;
 using System.Reflection;
+using System.Text;
 
 namespace RSH.Hangfire
 {
@@ -41,46 +44,69 @@ namespace RSH.Hangfire
             var weekNumber = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(DateTime.UtcNow,
                 CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
 
-            var emailBody = $"Kommende uke ({weekNumber}) \r\n\r\n";
+            var sb = new StringBuilder();
+            sb.AppendLine($"Kommende uke ({weekNumber}) \r\n\r\n");
 
             if (nextWeekBookings.Any())
             {
                 foreach (var booking in nextWeekBookings.OrderBy(b => b.From))
                 {
-                    var str = $"Navn: {booking.Name}\r\n" +
-                              $"Telefon: - {booking.Telephone} \r\n" +
-                              $"Dato: {booking.From:dd.MM}" + (booking.From == booking.To
-                                  ? "\r\n"
-                                  : $" - {booking.To:dd.MM} \r\n") +
-                              $"Område - {booking.Area} \r\n" +
-                              $"Melding: {booking.Comment}\r\n\r\n";
-                    emailBody += str;
+                    sb.AppendLine($"Navn: {booking.Name}");
+                    sb.AppendLine($"Telefon: - {booking.Telephone}");
+
+                    if (booking.From == booking.To)
+                    {
+                        sb.AppendLine($"Dato: {booking.From:dd.MM}");
+                    }
+                    else
+                    {
+                        sb.AppendLine($"Dato: {booking.From:dd.MM} - {booking.To:dd.MM}");
+                    }
+
+                    sb.AppendLine($"Område - {booking.Area}");
+                    sb.AppendLine($"Melding: {booking.Comment}");
+                    sb.AppendLine(); // Blank line between bookings
                 }
             }
             else
             {
-                emailBody += "Ingen bookinger";
+                sb.AppendLine("Ingen bookinger for kommende uke");
             }
 
-            var sentEmails = 0;
+            // Create the email once
+            var message = new MimeMessage();
+
+            // From address — must be a verified sender in Resend
+            message.From.Add(new MailboxAddress("Rensvik Samfunnshus", "rensvik.samfunnshus@bzl.no"));
+
+            // Add all recipients
+            foreach (var recipient in emails)
+            {
+                message.To.Add(MailboxAddress.Parse(recipient));
+            }
+
+            // Subject
+            message.Subject = $"Rensvik Samfunnshus, uke {weekNumber}";
+
+            // Body (HTML in this example)
+            message.Body = new TextPart("html")
+            {
+                Text = sb.ToString()
+            };
+
+            // Send via Resend
             using (var client = new SmtpClient())
             {
-                foreach (var recipient in emails)
-                {
-                    var mailMessage = new MailMessage
-                    {
-                        Subject = $"Rensvik Samfunnshus, uke {weekNumber}",
-                        Body = emailBody,
-                        BodyEncoding = System.Text.Encoding.UTF8,
-                        From = new MailAddress(EmailHelper.GetSmtpUsername(), "Rensvik Samfunnshus")
-                    };
-                    mailMessage.To.Add(recipient);
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true; // Dev mode — disable in production
 
-                    client.Send(mailMessage);
-                    sentEmails++;
-                }
+                client.Connect("smtp.resend.com", 587, SecureSocketOptions.StartTls);
+                client.Authenticate("resend", "re_ZKR3eYoB_CSEqC3MEgyfTbTSKqc2pwbL9");
+
+                client.Send(message);
+                client.Disconnect(true);
             }
 
+            var sentEmails = emails.Count();
             return $"Sent {sentEmails} emails, to following list of recipients: {string.Join(", ", emails)}";
         }
 
@@ -101,40 +127,56 @@ namespace RSH.Hangfire
 
             var emailRecipientsList = EmailHelper.GetNewBookingEmails();
 
-            var mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress(EmailHelper.GetSmtpUsername(), "Rensvik Samfunnshus");
+            // Build the email
+            var message = new MimeMessage();
 
+            // From address — must be verified in Resend
+            message.From.Add(new MailboxAddress("Rensvik Samfunnshus", "rensvik.samfunnshus@bzl.no"));
+
+            // Add all recipients
             foreach (var emailRecipient in emailRecipientsList)
             {
-                mailMessage.To.Add(emailRecipient);
+                message.To.Add(MailboxAddress.Parse(emailRecipient));
             }
-            mailMessage.Subject = $"Ny booking ({DateTime.UtcNow:dd.MM HH:mm})";
-            mailMessage.BodyEncoding = System.Text.Encoding.UTF8;
 
-            var body = $"Navn: {booking.Name} \r\n";
-            body += $"Telefon: {booking.Telephone} \r\n";
-            body += $"Område: {booking.Area} \r\n";
+            message.Subject = $"Ny booking ({DateTime.UtcNow:dd.MM HH:mm})";
+
+            // Build body
+            var bodyBuilder = new StringBuilder();
+            bodyBuilder.AppendLine($"Navn: {booking.Name}");
+            bodyBuilder.AppendLine($"Telefon: {booking.Telephone}");
+            bodyBuilder.AppendLine($"Område: {booking.Area}");
+
             if (booking.From == booking.To)
             {
-                body += $"Dato: {booking.From:dd.MM} \r\n";
+                bodyBuilder.AppendLine($"Dato: {booking.From:dd.MM}");
             }
             else
             {
-                body += $"Dato: {booking.From:dd.MM} - {booking.To:dd.MM} \r\n";
+                bodyBuilder.AppendLine($"Dato: {booking.From:dd.MM} - {booking.To:dd.MM}");
             }
 
-            body += $"Tid: {booking.TimeOfDay} \r\n";
-            body += $"Formål: {booking.Purpose} \r\n";
-            body += $"Kommentar: {booking.Comment} \r\n";
+            bodyBuilder.AppendLine($"Tid: {booking.TimeOfDay}");
+            bodyBuilder.AppendLine($"Formål: {booking.Purpose}");
+            bodyBuilder.AppendLine($"Kommentar: {booking.Comment}");
+            bodyBuilder.AppendLine();
+            bodyBuilder.AppendLine("Marker denne bookingen som reservert ved å klikke lenken nedenfor");
+            bodyBuilder.AppendLine(Settings.NewBookingEmailLinkTarget + $"?t={token.Key}&id={id}");
 
-            body += $"Marker denne bookingen som reservert ved å klikke lenken nedenfor\r\n";
-            body += Settings.NewBookingEmailLinkTarget + $"?t={token.Key}&id={id}";
-
-            mailMessage.Body = body;
+            // Use plain text since it looks like a text-based email
+            message.Body = new TextPart("plain")
+            {
+                Text = bodyBuilder.ToString()
+            };
 
             using (var client = new SmtpClient())
             {
-                client.Send(mailMessage);
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                client.Connect("smtp.resend.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+                client.Authenticate("resend", "re_ZKR3eYoB_CSEqC3MEgyfTbTSKqc2pwbL9");
+
+                client.Send(message);
+                client.Disconnect(true);
             }
 
             return "New booking actions complete";
