@@ -5,6 +5,7 @@ using MimeKit;
 using RSH.Models;
 using RSH.Utility;
 using System;
+using System.Configuration;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -100,7 +101,8 @@ namespace RSH.Hangfire
                 client.ServerCertificateValidationCallback = (s, c, h, e) => true; // Dev mode — disable in production
 
                 client.Connect("smtp.resend.com", 587, SecureSocketOptions.StartTls);
-                client.Authenticate("resend", "re_ZKR3eYoB_CSEqC3MEgyfTbTSKqc2pwbL9");
+                var apiKey = ConfigurationManager.AppSettings["ResendApiKey"];
+                client.Authenticate("resend", apiKey);
 
                 client.Send(message);
                 client.Disconnect(true);
@@ -169,11 +171,13 @@ namespace RSH.Hangfire
                 Text = bodyBuilder.ToString()
             };
 
+            var apiKey = ConfigurationManager.AppSettings["ResendApiKey"];
+
             using (var client = new SmtpClient())
             {
                 client.ServerCertificateValidationCallback = (s, c, h, e) => true;
                 client.Connect("smtp.resend.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-                client.Authenticate("resend", "re_ZKR3eYoB_CSEqC3MEgyfTbTSKqc2pwbL9");
+                client.Authenticate("resend", apiKey);
 
                 client.Send(message);
                 client.Disconnect(true);
