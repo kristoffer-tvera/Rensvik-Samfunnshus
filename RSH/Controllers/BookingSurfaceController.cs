@@ -37,7 +37,10 @@ namespace RSH.Controllers
 
             try
             {
-                BookingHelper.New(booking);
+                if(booking.Telephone.Length == 8)
+                {
+                    BookingHelper.New(booking);
+                }
             }
             catch (Exception e)
             {
@@ -46,8 +49,17 @@ namespace RSH.Controllers
                 TempData["ModalBody"] = "Det ser ut som at skjemaet ikke har blitt riktig fylt ut. Prøv på nytt.";
             }
 
-            TempData["ModalTitle"] = "Vi har mottatt din forespørsel.";
-            TempData["ModalBody"] = "Vi kommer til å ta kontakt i løpet av de nærmeste dager for å bekrefte din reservasjon.";
+            
+            if (booking.Telephone.Length == 8)
+            {
+                TempData["ModalTitle"] = "Vi har mottatt din forespørsel.";
+                TempData["ModalBody"] = "Vi kommer til å ta kontakt i løpet av de nærmeste dager for å bekrefte din reservasjon.";
+            }
+            else
+            {
+                TempData["ModalTitle"] = "Vi har IKKE mottatt din forespørsel.";
+                TempData["ModalBody"] = "Det ser ut som at skjemaet ikke har blitt riktig fylt ut. Prøv på nytt. Telefonnummer må inneholde nøyaktig 8 siffer.";
+            }
             return RedirectToUmbracoPage(nodeId);
         }
 
